@@ -1,0 +1,67 @@
+/*----my own customize css ---- */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+.nav-rightside {
+    text-align: right;
+}
+.marginforjumbo {
+    margin-top: 150px;
+    margin-left: 70px;
+}
+.bg-whiteblue {
+    background-color: #ceecf2;
+}
+.bg-whitegreen {
+    background-color: #d5f5e9;
+}
+.bg-whiteyellow {
+    background-color: #f2f5d5;
+}
+.bg-whitepurple {
+    background-color: #eed5f5;
+}
+.hover-active:hover {
+    font-weight: bold; 
+}
+.header-title {
+    font-size: 30px;
+    font-weight: bold;
+}
+.logo {
+    height: 3rem
+}
+.selectorForm {
+    width: 130px;
+    font-weight: bold;
+    background-color: #eed5f5;
+    font-size: 18px;
+}
+.selectorLabel {
+    font-size: 20px;
+}
+.pie_chart {
+    width: 400px; 
+    height: 400px;
+}
+.line_chart {
+    width: 600px; 
+    height: 사00px;
+}
+.news_chart {
+    width: 900px; 
+    height: 600px;
+}
+.newsPositive {
+    color:cornflowerblue;
+    font-weight: bold
+}
+.newsNegative {
+    color:deeppink;
+    font-weight: bold;
+}
+.statistics_card {
+    background-color:lightgreen;
+    margin-top: 20px;
+}
