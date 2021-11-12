@@ -1,1 +1,0 @@
-branch 이름을 고치기 위해 frontend_main 생성 후 frontend_211110 merge 예정임
