@@ -1,0 +1,68 @@
+{"count": {
+  "total_count": 2150,
+  "plus_count": 550,
+  "minus_count": 1300,
+  "normal_count": 300,
+  "case": 2156
+ },
+ "news_list": [
+   {
+     "sentiment": "부정",
+     "press": "조선일보",
+     "title": "코로나 시국에 홍대에서 집합을?",
+     "link": "www.hongdae.tk",
+     "time_added": "2021.11.08 18:25:19"
+   },
+   {
+    "sentiment": "부정",
+    "press": "서울신문",
+    "title": "코로나 시국에 대선주자가 파티를?",
+    "link": "www.naver.com/josun-jjang",
+    "time_added": "2021.11.08 17:23:19"
+   }
+  ],
+  "press_stats": [
+    {
+      "press": "조선일보",
+      "plus_count": 50,
+      "minus_count": 30
+    },
+    {
+      "press": "서울신문",
+      "plus_count": 10,
+      "minus_count": 50
+    }
+  ],
+
+
+"stats": {
+  "case_stats": [
+    {
+      "date": "2021-11-01",
+      "case": 1000
+    },
+    {
+      "date": "2021-11-02",
+      "case": 900
+    },
+    {
+      "date": "2021-11-03",
+      "case": 1200
+    }
+  ],
+  "sentiment_stats": [
+    {
+      "date": "2021-11-01",
+      "sentiment": -200
+    },
+    {
+      "date": "2021-11-02",
+      "sentiment": 100
+    },
+    {
+      "date": "2021-11-03",
+      "sentiment": -150
+    }
+  ]
+ }
+}
