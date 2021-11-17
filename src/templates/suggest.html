@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block contents %}
+<!--Form to add new suggest-->
+<div class="container-fluid">
+    <button class="btn btn-outline-success ml-5 mt-4" type="button" data-bs-toggle="collapse" data-bs-target="#suggestAddForm" aria-expanded="false" aria-controls="suggestAddForm">제안 추가하기</button>
+    <div class="mx-0 mt-4">
+        <div class="collapse" id="suggestAddForm">
+            <div class="card bg-whitegreen">
+                <div class="mb-3 mx-3 mt-3 row">
+                    <label for="suggestTitleInput" class="col-sm-2 col-form-label">제목(요약)</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="suggestTitleInput">
+                    </div>
+                </div>
+                <div class="mb-3 mx-3 row">
+                    <label for="suggestContentInput" class="col-sm-2 col-form-label">상세 내용</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="suggestContentInput"rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="mb-3 mx-3 row">
+                    <label for="suggestTitleInput" class="col-sm-2 col-form-label">비밀번호</label>
+                    <div class="col-sm-10 mb-2">
+                        <input type="password" class="form-control" id="suggestPasswordInput">
+                    </div>
+                    <div class="col-sm-10 offset-sm-2 form-text">비밀번호는 나중에 이 제안을 수정, 삭제할 때 필요합니다</div>
+                </div>
+                <div class="mb-3 mx-3 row">
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-success" id="buttonForAddingSuggest">&nbsp;추가&nbsp;</button>
+                    </div>
+                    <div class="col-sm-10 mt-1">
+                        <h6 id="errorMessageForSuggest" class="error"></h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Table to see current suggests --> 
+
+<div class="container-fluid mt-5 text-center">
+  <h3>제안들 모음</h3>
+  <div class="suggest_chart mx-5 px-2 mt-3">
+    <table class="table table-bordered">
+      <thead>
+        <tr class="bg-whitepurple">
+          <th scope="col" style="width: 20%" >등록 날짜</th>
+          <th scope="col" style="width: 50%">제목</th>
+          <th scope="col" style="width: 15%" >수정 &nbsp;  삭제</th>
+          <th scope="col" style="width: 15%">상태</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in suggests %}
+        <tr class="align-middle" id="suggestTableBackground{{s['_id']}}">
+          <td style="width: 20%">{{ s['createdAt'] }}</td>
+          <td style="width: 50%" class="hover-active"  data-bs-toggle="modal" data-bs-target="#modalForViewingContent{{s['_id']}}">{{ s['title'] }}</td>
+          <td style="width: 15%">
+              <div class="row justify-content-center">
+                  <div class="col-lg-3 px-0 mx-1 hover-active" id="{{ s['_id'] }}" type="button" data-bs-toggle="modal" data-bs-target="#modalForEditingSuggest{{s['_id']}}">수정</div>
+                  <div class="col-lg-3 px-0  mx-1 hover-active" id="{{ s['_id'] }}" type="button" data-bs-toggle="modal" data-bs-target="#modalForDeletingSuggest{{s['_id']}} ">삭제</div>
+              </div>
+          </td>
+          <td style="width: 15%" class="suggest-status hover-active" id="{{ s['_id'] }}" data-iscompleted="{{ s['isCompleted'] }}" data-bs-toggle="modal" data-bs-target="#modalForTogglingStatus{{s['_id']}}"></td>
+        </tr>
+        <!--Modal for toggling status-->
+        <div class="modal fade" id="modalForTogglingStatus{{s['_id']}}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header bg-whitepurple">
+                    <h5 class="modal-title" id="staticBackdropLabel">상태를 바꾸려면 관리자 비밀번호를 입력하세요</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-start">
+                    <div class="mb-3">
+                        <label class="col-form-label">관리자 비밀번호</label>
+                        <input type="password" class="form-control" name="managerPassword{{s['_id']}}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary buttonForTogglingStatus"  id="{{ s['_id'] }}" data-iscompleted="{{ s['isCompleted'] }}">상태바꾸기</button>
+                </div>
+              </div>
+            </div>
+        </div>
+        <!--Modal for viewing content-->
+        <div class="modal fade" id="modalForViewingContent{{s['_id']}}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header bg-whitepurple">
+                    <h5 class="modal-title" id="staticBackdropLabel">상세 내용</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-start">
+                    <div class="mb-3">
+                        {{s['content']}}
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <!--Modal for deleting suggestion-->
+        <div class="modal fade" id="modalForDeletingSuggest{{s['_id']}}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header bg-whitepurple">
+                    <h5 class="modal-title" id="staticBackdropLabel">제안을 삭제하려면 비밀번호를 입력해 주세요</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-start">
+                    <div class="mb-3">
+                        <label class="col-form-label">비밀번호</label>
+                        <input type="password" class="form-control" name="{{s['_id']}}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary buttonForDeletingSuggest"  id="{{ s['_id'] }}">삭제</button>
+                </div>
+              </div>
+            </div>
+        </div>
+    
+        <!--Modal for editing suggestion-->
+        <div class="modal fade" id="modalForEditingSuggest{{s['_id']}}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header bg-whitepurple">
+                    <h5 class="modal-title" id="staticBackdropLabel">제안을 수정해 주세요</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-start">
+                    <div class="mb-3">
+                        <label class="col-form-label">제목</label>
+                        <textarea rows="2" class="form-control" name="title{{s['_id']}}">{{ s['title'] }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">상세내용</label>
+                        <textarea rows="4" class="form-control" name="content{{s['_id']}}">{{ s['content'] }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">비밀번호</label>
+                        <input type="password" class="form-control" name="password{{s['_id']}}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary buttonForEditingSuggest"  id="{{ s['_id'] }}">수정</button>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+let navbarForSuggest = document.querySelector('#navSuggest')
+navbarForSuggest.classList.add('nav-active')
+
+
+{% endblock %}

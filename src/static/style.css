@@ -25,6 +25,10 @@ a {
 .hover-active:hover {
     font-weight: bold; 
 }
+.nav-active {
+    font-weight: 900  !important;
+    color: #a83e9e  !important;
+}
 .header-title {
     font-size: 30px;
     font-weight: bold;
@@ -64,4 +68,7 @@ a {
 .statistics_card {
     background-color:lightgreen;
     margin-top: 20px;
+}
+.error {
+    color: red;
 }
