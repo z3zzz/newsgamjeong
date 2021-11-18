@@ -3,7 +3,7 @@ getNews = async () => {
     let res = await fetch('https://gamjeong.tk/api/news_list')
     data = await res.json()
     let targetArray = data["2020.01.01"]['연합뉴스']
-    const resultArray = await includesArray(targetArray)
+    const resultArray = await findArray(targetArray)
     //resultArray.forEach(elem => addNews(elem))
     console.log("Is it working before or after await?")
     console.log(resultArray)
@@ -23,9 +23,9 @@ const filterArray = async arr => {
 }
 
 const findArray = async arr => {
-    return arr.find(elem => {
+    return setTimeout(() => {arr.find(elem => {
         return elem.label === '노말'
-    })
+    })}, 5000)
 }
 
 
@@ -65,10 +65,12 @@ const reduceArray = async arr => {
     }, 0)
 }
 
-const includesArray = async arr => {
-    setTimeout(() => {
-         return arr.includes(6)
+const includesArray = arr => {
+    return new Promise(resolve => {
+        setTimeout(() => {
+         resolve(arr.includes(6))
     }, 5000)
+})
 }
 
 const addNews = async elem => {
