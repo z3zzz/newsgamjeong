@@ -28,9 +28,9 @@ if (pieChartElem) {
 }
 
 const dataForLine = {
-    labels: ['11.1','11.2','11.3','11.4','11.5','11.6','11.7','11.8','11.9'],
+    labels: ['11.1','11.2','11.3','11.4','11.5','11.6','11.7','11.8','11.9', '11.10', '11.11', '11.12', '11.13', '11.14', '11.15', '11.16'],
     datasets: [{
-            data: [-220, -110, 20, 50, 210, -250, 200, 101, 415],
+            data: [-220, -110, 20, 50, 210, -250, 200, 101, 415, 300, 250, 200, 180, 210, 250, 260],
             label: "+ 긍정, - 부정",
             borderColor: 'rgb(50, 168, 82)',
             backgroundColor: 'rgb(50, 168, 82)',
@@ -287,21 +287,28 @@ let selectElementForDate = document.querySelector('#selectForDate')
 // 첫 번째 fetch (사이트 로드 시 자동 실행됨)
 fetch('/api/statistics_card')
 .then(res => res.json())
-    .then(data => {
-        let dates = Object.keys(data)
-        for(i=0;i<dates.length;i++){
-            let option = document.createElement('option')
-            option.innerText = dates[i]
-            selectElementForDate.append(option)
-        }
-    })
+.then(data => {
+    let dates = Object.keys(data)
+    for(i=dates.length-1;i>-1;i--){
+        let option = document.createElement('option')
+        option.innerText = dates[i]
+        selectElementForDate.append(option)
+    }
+})
+
+let infections
+fetch('/api/infections_count')
+.then(res => res.json())
+.then(data => {
+    infections = data
+})
+
 // 두 번째 fetch (특정 날짜 선택 시 실행됨)
 addEventForSingleElem("change", selectElementForDate, async e => {
     selected_date = e.target.value
     response = await fetch('/api/statistics_card')
     data = await response.json()
     if (selected_date in data) {
-        console.log(selected_date, data, data[selected_date])
         let total = data[selected_date].total
         let positive =  data[selected_date].positive
         let negative =  data[selected_date].negative
@@ -313,6 +320,9 @@ addEventForSingleElem("change", selectElementForDate, async e => {
         document.querySelector('#statisticsCardNormal').innerText = `${Math.round(normal / total * 100)}%`
 
         await provideRedColorForHighest(positive, negative, normal)
+    }
+    if (selected_date in infections) {
+        document.querySelector('#infectionsCount').innerText = infections[selected_date]
     }
 })
 

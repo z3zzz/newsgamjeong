@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block contents %}
+
 <!--Form to add new suggest-->
 <div class="container-fluid">
     <button class="btn btn-outline-success ml-5 mt-4" type="button" data-bs-toggle="collapse" data-bs-target="#suggestAddForm" aria-expanded="false" aria-controls="suggestAddForm">제안 추가하기</button>
@@ -95,9 +96,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-start">
-                    <div class="mb-3">
-                        {{s['content']}}
-                    </div>
+                    <div class="mb-3 enter-newline">{{s['content']}}</div>
                 </div>
               </div>
             </div>
@@ -138,7 +137,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label">상세내용</label>
-                        <textarea rows="4" class="form-control" name="content{{s['_id']}}">{{ s['content'] }}</textarea>
+                        <textarea rows="4" class="form-control enter-newline" name="content{{s['_id']}}">{{s['content']}}</textarea>
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label">비밀번호</label>
