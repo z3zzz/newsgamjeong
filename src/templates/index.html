@@ -7,38 +7,20 @@
     <div class="mx-2 row">
         <div class="col-md-4 mt-4 text-center">
            <label class="selectorLabel">날짜&nbsp;&nbsp;</label>
-            <select class="selectorForm text-center" id="selectForDate">
-              <option>전체</option>
+            <select class="selectorForm text-center" id="selectDate">
+              <option value="total">전체</option>
             </select>
         </div>
         <div class="col-md-4 mt-4 text-center">
            <label class="selectorLabel">키워드&nbsp;&nbsp;</label>
-            <select class="selectorForm text-center">
-              <option>전체</option>
-              <option>코로나</option>
-              <option>여행</option>
-              <option>대선</option>
-              <option>주식</option>
-              <option>부동산</option>
-              <option>백신</option>
-              <option>자영업</option>
-              <option>IT</option>
-              <option>친환경</option>
-              <option>교육</option>
-              <option>수도권</option>
+            <select class="selectorForm text-center" id="selectKeyword">
+              <option value="total">전체</option>
             </select>
         </div>
         <div class="col-md-4 mt-4 text-center">
            <label class="selectorLabel">언론사&nbsp;&nbsp;</label>
-            <select class="selectorForm text-center">
-              <option>전체</option>
-              <option>중앙일보</option>
-              <option>조선일보</option>
-              <option>동아일보</option>
-              <option>한겨레</option>
-              <option>서울신문</option>
-              <option>오마이뉴스</option>
-              <option>•••</option>
+            <select class="selectorForm text-center" id="selectCompany">
+              <option value="total">전체</option>
             </select>
         </div>
     </div>
@@ -75,7 +57,7 @@
 <!--Pie chart Graph-->
 <div class="container-fluid mt-5 text-center">
   <h3>긍정-부정 분석 결과</h3>
-  <div class="pie_chart mx-auto mt-3">
+  <div class="pie_chart mx-auto mt-3" id="divForPieChart">
     <canvas id="positiveNegativePieChart" ></canvas>
   </div>
 </div>
