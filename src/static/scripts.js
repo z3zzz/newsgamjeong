@@ -1,28 +1,3 @@
-//Chart Example for 감정감정
-
-const dataForLine = {
-    labels: ['11.1','11.2','11.3','11.4','11.5','11.6','11.7','11.8','11.9', '11.10', '11.11', '11.12', '11.13', '11.14', '11.15', '11.16'],
-    datasets: [{
-            data: [-220, -110, 20, 50, 210, -250, 200, 101, 415, 300, 250, 200, 180, 210, 250, 260],
-            label: "+ 긍정, - 부정",
-            borderColor: 'rgb(50, 168, 82)',
-            backgroundColor: 'rgb(50, 168, 82)',
-        }]
-};
-
-let lineChartElem = document.getElementById('positiveNegativeLineChart')
-if (lineChartElem) {
-    new Chart(lineChartElem,{
-        type: 'line',
-        data: dataForLine,
-        options: {
-            // responsive: true,
-        }
-    })
-
-}
-
-
 // Fetch API (post, delete, patch)
 const postData = async (url, data) => {
     const response = await fetch(url, {
