@@ -22,19 +22,19 @@ const getSelectors = async () => {
     selectors.date.forEach(selector => {
         let option = document.createElement('option')
         option.innerText = selector
-        elemForSelectingDate.append(option)
+        elemForSelectingDate?.append(option)
     })
 
     selectors.category.forEach(selector => {
         let option = document.createElement('option')
         option.innerText = selector
-        elemForSelectingKeyword.append(option)
+        elemForSelectingKeyword?.append(option)
     })
 
     selectors.company.forEach(selector => {
         let option = document.createElement('option')
         option.innerText = selector
-        elemForSelectingCompany.append(option)
+        elemForSelectingCompany?.append(option)
     })
 }
 
@@ -199,7 +199,6 @@ const changeNewsChartContent = async reqData => {
         td4.innerText = elem.label
 
         label = elem.label
-        console.log(label)
 
         if (label === '긍정'){
             td4.classList.add('newsPositive')
@@ -229,10 +228,103 @@ const makeNewRankingChart = async (e) => {
         }
 }
 
+const createLineChartCanvas = async () => {
+    return `<canvas id="lineChart"></canvas>`
+}
+
+const changeMonthForLineChart = async e => {
+    let requestMonth = currentMonth + parseInt(e.target.dataset.monthchange)
+    let response = await getJsonFromApi('line_graph?',{month: requestMonth})
+    if (response.result === "fail") {
+        alert(response.reason + ". " )
+        return
+    }
+    document.querySelector('#divForLineChart').innerHTML = await createLineChartCanvas()
+    await drawLineChart(requestMonth)
+}
+
+const drawLineChart = async (month) => {
+    let lineChartElem = document.getElementById('lineChart')
+    let response = await getJsonFromApi('line_graph?',{month})
+    if (response.result === "fail") {
+        alert(response.reason + ". 가장 가까운 월로 보여드릴게요")
+    }
+    let dates = []
+    let values = []
+    response.data.forEach(elem => {
+        dates.push(String(Object.keys(elem)).slice(5,10))
+        values.push(parseInt(Object.values(elem)))
+    })
+    const dataForLine = {
+        type: 'line',
+        data: values,
+        label: "+긍정 -부정",
+        borderColor: 'rgb(50, 168, 82)',
+        backgroundColor: 'rgb(50, 168, 82)',
+        yAxisID: 'y',
+    }
+
+    let response_infections = await getJsonFromApi('infections?', {month})
+    let dates_infections = []
+    let values_infections = []
+
+    response_infections.data.forEach(elem => {
+        dates_infections.push(String(elem[0]).slice(5,10))
+        values_infections.push(parseInt(elem[1]))
+    })
+    const dataForInfections = {
+        type: 'bar',
+        data: values_infections,
+        label: "감염자수",
+        borderColor: '#87ded5',
+        backgroundColor: '#87ded5',
+        yAxisID: 'y1',
+    }
+
+    new Chart(lineChartElem,{
+        data: {
+            datasets: [dataForLine, dataForInfections],
+            labels: dates
+        },
+        options: {
+            // responsive: true,
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            },
+            scales: {
+                y: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                },
+                y1: {
+                    type: 'linear',
+                    display: true,
+                    position: 'right',
+                    grid: {
+                        drawOnChartArea: false,
+                    }
+                },
+            },
+        },
+        stacked: false,
+    })
+
+    addEventToId("click", "buttonForLastMonth", changeMonthForLineChart)
+    addEventToId("click", "buttonForNextMonth", changeMonthForLineChart)
+
+    if (response.result === "success") {
+        currentMonth = month
+    }
+}
+
+let currentMonth = -1
+let maxMonth = 5
 const getNewData = async () => {
-    let date = elemForSelectingDate.value
-    let keyword = elemForSelectingKeyword.value
-    let company = elemForSelectingCompany.value
+    let date = elemForSelectingDate?.value
+    let keyword = elemForSelectingKeyword?.value
+    let company = elemForSelectingCompany?.value
 
     let reqData = {date, keyword, company}
 
@@ -245,6 +337,24 @@ const getNewData = async () => {
         document.querySelector('#divForPieChart').style.width = '400px'
         await drawPieChart()
     }
+
+    if (date === "total") {
+        requestMonth = maxMonth
+    } else {
+        requestMonth = parseInt(date.slice(8,10))
+    }
+
+    if (requestMonth <= maxMonth && requestMonth !== currentMonth ) {
+        document.querySelector('#divForLineChart').innerHTML = await createLineChartCanvas()
+        await drawLineChart(requestMonth)
+    }
+
+    if (requestMonth > maxMonth && currentMonth !== maxMonth){
+        alert("해당 월의 데이터는 없습니다. 가장 가까운 월로 보여드릴게요")
+        document.querySelector('#divForLineChart').innerHTML = await createLineChartCanvas()
+        await drawLineChart(maxMonth)
+    }
+
     await changeNewsChartContent(reqData)
 }
 
@@ -261,5 +371,6 @@ const getFirstData = async () => {
     await getSelectors()
     await getNewData()
 }
-getFirstData()
+
+if (location.pathname === "/") getFirstData()
 
