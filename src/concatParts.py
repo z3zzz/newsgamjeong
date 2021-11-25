@@ -83,8 +83,9 @@ def date_specific_keyword_specific_company_total(date, keyword):
         "infections": 0
     }
     result2 = {
-        "positive_ranking": [],
-        "negative_ranking": []
+        "positive_ranking": {},
+        "negative_ranking": {},
+        "normal_ranking": {}
     }
     for news_date in data.keys():
         if news_date == date:
@@ -97,11 +98,24 @@ def date_specific_keyword_specific_company_total(date, keyword):
                         result1["normal"] += data[news_date][category][news_company]["normal"]
                         result1["infections"] = data[news_date][category][news_company]["infections"]
 
-                        result2["positive_ranking"].append((data[news_date][category][news_company]["positive"], news_company))
-                        result2["negative_ranking"].append((data[news_date][category][news_company]["negative"], news_company))
+                        if news_company not in result2["positive_ranking"]:
+                            result2["positive_ranking"][news_company] = data[news_date][category][news_company]["positive"]
+                        else:
+                            result2["positive_ranking"][news_company] += data[news_date][category][news_company]["positive"]
 
-    result2["positive_ranking"] = sorted(result2["positive_ranking"], key=lambda x:x[0], reverse=True )[:5]
-    result2["negative_ranking"] = sorted(result2["negative_ranking"], key=lambda x:x[0], reverse=True )[:5]
+                        if news_company not in result2["negative_ranking"]:
+                            result2["negative_ranking"][news_company] = data[news_date][category][news_company]["negative"]
+                        else:
+                            result2["negative_ranking"][news_company] += data[news_date][category][news_company]["negative"]
+
+                        if news_company not in result2["normal_ranking"]:
+                            result2["normal_ranking"][news_company] = data[news_date][category][news_company]["normal"]
+                        else:
+                            result2["normal_ranking"][news_company] += data[news_date][category][news_company]["normal"]
+
+    result2["positive_ranking"] = sorted(result2["positive_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
+    result2["negative_ranking"] = sorted(result2["negative_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
+    result2["normal_ranking"] = sorted(result2["normal_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
 
     result = {
         "statistics": result1,
@@ -112,8 +126,8 @@ def date_specific_keyword_specific_company_total(date, keyword):
 
 '''
 코드 테스트용
-pprint(date_specific_keyword_specific_company_total("2021.11.16", "경제"))
 '''
+pprint(date_specific_keyword_specific_company_total("2021.11.16", "경제"))
 
 # 4
 def date_specific_keyword_total_company_total(date):
@@ -125,8 +139,9 @@ def date_specific_keyword_total_company_total(date):
         "infections": 0
     }
     result2 = {
-        "positive_ranking": [],
-        "negative_ranking": []
+        "positive_ranking": {},
+        "negative_ranking": {},
+        "normal_ranking": {}
     }
     for news_date in data.keys():
         if news_date == date:
@@ -138,11 +153,24 @@ def date_specific_keyword_total_company_total(date):
                     result1["normal"] += data[news_date][category][news_company]["normal"]
                     result1["infections"] = data[news_date][category][news_company]["infections"]
 
-                    result2["positive_ranking"].append((data[news_date][category][news_company]["positive"], news_company))
-                    result2["negative_ranking"].append((data[news_date][category][news_company]["negative"], news_company))
+                    if news_company not in result2["positive_ranking"]:
+                        result2["positive_ranking"][news_company] = data[news_date][category][news_company]["positive"]
+                    else:
+                        result2["positive_ranking"][news_company] += data[news_date][category][news_company]["positive"]
 
-    result2["positive_ranking"] = sorted(result2["positive_ranking"], key=lambda x:x[0], reverse=True )[:5]
-    result2["negative_ranking"] = sorted(result2["negative_ranking"], key=lambda x:x[0], reverse=True )[:5]
+                    if news_company not in result2["negative_ranking"]:
+                        result2["negative_ranking"][news_company] = data[news_date][category][news_company]["negative"]
+                    else:
+                        result2["negative_ranking"][news_company] += data[news_date][category][news_company]["negative"]
+
+                    if news_company not in result2["normal_ranking"]:
+                        result2["normal_ranking"][news_company] = data[news_date][category][news_company]["normal"]
+                    else:
+                        result2["normal_ranking"][news_company] += data[news_date][category][news_company]["normal"]
+
+    result2["positive_ranking"] = sorted(result2["positive_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
+    result2["negative_ranking"] = sorted(result2["negative_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
+    result2["normal_ranking"] = sorted(result2["normal_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
 
     result = {
         "statistics": result1,
@@ -153,8 +181,8 @@ def date_specific_keyword_total_company_total(date):
 
 '''
 코드 테스트용
-pprint(date_specific_keyword_total_company_total("2021.11.16"))
 '''
+pprint(date_specific_keyword_total_company_total("2021.11.16"))
 
 # 5
 def date_total_keyword_specific_company_total(keyword):
@@ -166,8 +194,9 @@ def date_total_keyword_specific_company_total(keyword):
         "infections": 0
     }
     result2 = {
-        "positive_ranking": [],
-        "negative_ranking": []
+        "positive_ranking": {},
+        "negative_ranking": {},
+        "normal_ranking": {}
     }
     for news_date in data.keys():
         infection_flag = 0
@@ -179,16 +208,30 @@ def date_total_keyword_specific_company_total(keyword):
                     result1["negative"] += data[news_date][category][news_company]["negative"]
                     result1["normal"] += data[news_date][category][news_company]["normal"]
 
-                    result2["positive_ranking"].append((data[news_date][category][news_company]["positive"], news_company))
-                    result2["negative_ranking"].append((data[news_date][category][news_company]["negative"], news_company))
+                    if news_company not in result2["positive_ranking"]:
+                        result2["positive_ranking"][news_company] = data[news_date][category][news_company]["positive"]
+                    else:
+                        result2["positive_ranking"][news_company] += data[news_date][category][news_company]["positive"]
+
+                    if news_company not in result2["negative_ranking"]:
+                        result2["negative_ranking"][news_company] = data[news_date][category][news_company]["negative"]
+                    else:
+                        result2["negative_ranking"][news_company] += data[news_date][category][news_company]["negative"]
+
+                    if news_company not in result2["normal_ranking"]:
+                        result2["normal_ranking"][news_company] = data[news_date][category][news_company]["normal"]
+                    else:
+                        result2["normal_ranking"][news_company] += data[news_date][category][news_company]["normal"]
+
             if infection_flag == 0:
                 for news_company in data[news_date][category].keys():
                     result1["infections"] += data[news_date][category][news_company]["infections"]
                     infection_flag = 1
                     break
 
-    result2["positive_ranking"] = sorted(result2["positive_ranking"], key=lambda x:x[0], reverse=True )[:5]
-    result2["negative_ranking"] = sorted(result2["negative_ranking"], key=lambda x:x[0], reverse=True )[:5]
+    result2["positive_ranking"] = sorted(result2["positive_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
+    result2["negative_ranking"] = sorted(result2["negative_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
+    result2["normal_ranking"] = sorted(result2["normal_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
 
     result = {
         "statistics": result1,
@@ -199,8 +242,8 @@ def date_total_keyword_specific_company_total(keyword):
 
 '''
 코드 테스트용
-pprint(date_total_keyword_specific_company_total("경제"))
 '''
+pprint(date_total_keyword_specific_company_total("경제"))
 
 # 6
 def date_total_keyword_total_company_specific(company):
@@ -268,8 +311,9 @@ def date_total_keyword_total_company_total():
         "infections": 0
     }
     result2 = {
-        "positive_ranking": [],
-        "negative_ranking": []
+        "positive_ranking": {},
+        "negative_ranking": {},
+        "normal_ranking": {}
     }
     for news_date in data.keys():
         infection_flag = 0
@@ -280,16 +324,30 @@ def date_total_keyword_total_company_total():
                 result1["negative"] += data[news_date][category][news_company]["negative"]
                 result1["normal"] += data[news_date][category][news_company]["normal"]
 
-                result2["positive_ranking"].append((data[news_date][category][news_company]["positive"], news_company))
-                result2["negative_ranking"].append((data[news_date][category][news_company]["negative"], news_company))
+                if news_company not in result2["positive_ranking"]:
+                    result2["positive_ranking"][news_company] = data[news_date][category][news_company]["positive"]
+                else:
+                    result2["positive_ranking"][news_company] += data[news_date][category][news_company]["positive"]
+
+                if news_company not in result2["negative_ranking"]:
+                    result2["negative_ranking"][news_company] = data[news_date][category][news_company]["negative"]
+                else:
+                    result2["negative_ranking"][news_company] += data[news_date][category][news_company]["negative"]
+
+                if news_company not in result2["normal_ranking"]:
+                    result2["normal_ranking"][news_company] = data[news_date][category][news_company]["normal"]
+                else:
+                    result2["normal_ranking"][news_company] += data[news_date][category][news_company]["normal"]
+
             if infection_flag == 0:
                 for news_company in data[news_date][category].keys():
                     result1["infections"] += data[news_date][category][news_company]["infections"]
                     infection_flag = 1
                     break
 
-    result2["positive_ranking"] = sorted(result2["positive_ranking"], key=lambda x:x[0], reverse=True )[:5]
-    result2["negative_ranking"] = sorted(result2["negative_ranking"], key=lambda x:x[0], reverse=True )[:5]
+    result2["positive_ranking"] = sorted(result2["positive_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
+    result2["negative_ranking"] = sorted(result2["negative_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
+    result2["normal_ranking"] = sorted(result2["normal_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
 
     result = {
         "statistics": result1,
@@ -300,5 +358,5 @@ def date_total_keyword_total_company_total():
 
 '''
 코드 테스트용
-pprint(date_total_keyword_total_company_total())
 '''
+pprint(date_total_keyword_total_company_total())

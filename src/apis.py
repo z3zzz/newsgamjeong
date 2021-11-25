@@ -6,89 +6,93 @@ import getSelectors as gs
 
 apis = Blueprint(__name__, 'apis')
 
-def getParams():
-    selected_date = request.args.get("date")
-    selected_keyword = request.args.get("keyword")
-    selected_company = request.args.get("company")
+def is_total_selected(selected_date, selected_keyword, selected_company):
 
     if selected_date == "total":
         is_date_total = True
     else:
         is_date_total = False
+
     if selected_keyword == "total":
         is_keyword_total = True
     else:
         is_keyword_total = False
+
     if selected_company == "total":
         is_company_total = True
     else:
         is_company_total = False
 
     return {
-        "is_total": (is_date_total, is_keyword_total, is_company_total),
-        "params": (selected_date, selected_keyword, selected_company)
+        "date": is_date_total,
+        "keyword": is_keyword_total,
+        "company": is_company_total
     }
 
 
 @apis.route('/api/statistics', methods=["GET"])
 def statistics():
-    requested = getParams()
-    is_total = "is_total"
-    params = "params"
+    selected_date = request.args.get("date")
+    selected_keyword = request.args.get("keyword")
+    selected_company = request.args.get("company")
 
-    if requested[is_total][0]:
-        if requested[is_total][1]:
-            if requested[is_total][2]:
+    is_total = is_total_selected(selected_date, selected_keyword, selected_company)
+
+    if is_total["date"]:
+        if is_total["keyword"]:
+            if is_total["company"]:
                 return jsonify(cp.date_total_keyword_total_company_total())
             else:
-                return jsonify(cp.date_total_keyword_total_company_specific(requested[params][2]))
+                return jsonify(cp.date_total_keyword_total_company_specific(selected_company))
         else:
-            if requested[is_total][2]:
-                return jsonify(cp.date_total_keyword_specific_company_total(requested[params][1]))
+            if is_total["company"]:
+                return jsonify(cp.date_total_keyword_specific_company_total(selected_keyword))
             else:
-                return jsonify(cp.date_total_keyword_specific_company_specific(requested[params][1], requested[params][2]))
+                return jsonify(cp.date_total_keyword_specific_company_specific(selected_keyword, selected_company))
     else:
-        if requested[is_total][1]:
-            if requested[is_total][2]:
-                return jsonify(cp.date_specific_keyword_total_company_total(requested[params][0]))
+        if is_total["keyword"]:
+            if is_total["company"]:
+                return jsonify(cp.date_specific_keyword_total_company_total(selected_date))
             else:
-                return jsonify(cp.date_specific_keyword_total_company_specific(requested[params][0], requested[params][2]))
+                return jsonify(cp.date_specific_keyword_total_company_specific(selected_date, selected_company))
         else:
-            if requested[is_total][2]:
-                return jsonify(cp.date_specific_keyword_specific_company_total(requested[params][0], requested[params][1]))
+            if is_total["company"]:
+                return jsonify(cp.date_specific_keyword_specific_company_total(selected_date, selected_keyword))
             else:
-                return jsonify(cp.date_specific_keyword_specific_company_specific(requested[params][0], requested[params][1], requested[params][2]))
+                return jsonify(cp.date_specific_keyword_specific_company_specific(selected_date, selected_keyword, selected_company))
 
 
 
 @apis.route('/api/newses', methods=["GET"])
 def news_list():
-    requested = getParams()
-    is_total = "is_total"
-    params = "params"
+    selected_date = request.args.get("date")
+    selected_keyword = request.args.get("keyword")
+    selected_company = request.args.get("company")
 
-    if requested[is_total][0]:
-        if requested[is_total][1]:
-            if requested[is_total][2]:
+    is_total = is_total_selected(selected_date, selected_keyword, selected_company)
+
+    if is_total["date"]:
+        if is_total["keyword"]:
+            if is_total["company"]:
                 return jsonify(cn.date_total_keyword_total_company_total())
             else:
-                return jsonify(cn.date_total_keyword_total_company_specific(requested[params][2]))
+                return jsonify(cn.date_total_keyword_total_company_specific(selected_company))
         else:
-            if requested[is_total][2]:
-                return jsonify(cn.date_total_keyword_specific_company_total(requested[params][1]))
+            if is_total["company"]:
+                return jsonify(cn.date_total_keyword_specific_company_total(selected_keyword))
             else:
-                return jsonify(cn.date_total_keyword_specific_company_specific(requested[params][1], requested[params][2]))
+                return jsonify(cn.date_total_keyword_specific_company_specific(selected_keyword, selected_company))
     else:
-        if requested[is_total][1]:
-            if requested[is_total][2]:
-                return jsonify(cn.date_specific_keyword_total_company_total(requested[params][0]))
+        if is_total["keyword"]:
+            if is_total["company"]:
+                return jsonify(cn.date_specific_keyword_total_company_total(selected_date))
             else:
-                return jsonify(cn.date_specific_keyword_total_company_specific(requested[params][0], requested[params][2]))
+                return jsonify(cn.date_specific_keyword_total_company_specific(selected_date, selected_company))
         else:
-            if requested[is_total][2]:
-                return jsonify(cn.date_specific_keyword_specific_company_total(requested[params][0], requested[params][1]))
+            if is_total["company"]:
+                return jsonify(cn.date_specific_keyword_specific_company_total(selected_date, selected_keyword))
             else:
-                return jsonify(cn.date_specific_keyword_specific_company_specific(requested[params][0], requested[params][1], requested[params][2]))
+                return jsonify(cn.date_specific_keyword_specific_company_specific(selected_date, selected_keyword, selected_company))
 
 @apis.route('/api/selectors', methods=["GET"])
 def selectors():

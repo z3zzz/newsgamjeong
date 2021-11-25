@@ -1,31 +1,4 @@
 //Chart Example for 감정감정
-const dataForPie = {
-    labels: ['긍정','부정', '노말'],
-    datasets: [{
-      label: 'positive-negative',
-      data: [12000*0.35, 12000*0.55,12000*0.1],
-      backgroundColor: [
-        'rgb(54, 162, 235)',
-        'rgb(255, 99, 132)',
-        'rgb(224, 240, 189)',
-      ],
-      hoverOffset: 4
-    }]
-  };
-
-let pieChartElem = document.getElementById('positiveNegativePieChart')
-if (pieChartElem) {
-    new Chart(pieChartElem, {
-        type: "pie",
-        data: dataForPie,
-        options: {
-            title: {
-                display: true,
-                text: 'Positive-Negative Chart'
-            }
-        }
-    })
-}
 
 const dataForLine = {
     labels: ['11.1','11.2','11.3','11.4','11.5','11.6','11.7','11.8','11.9', '11.10', '11.11', '11.12', '11.13', '11.14', '11.15', '11.16'],

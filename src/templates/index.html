@@ -31,34 +31,41 @@
   <div class="row mt-3 justify-content-center">
     <div class="col-md-1 mx-4 shadow statistics_card text-center">
       <h6 class="mt-2" style="font-weight: bold;">총 개수</h6>
-      <h4 id="statisticsCardTotal">12000</h4>
+      <h4 id="statisticsCardTotal"></h4>
+      <div class="spinner-grow  spinner-grow-sm text-dark temp-spinner mb-2" role="status"></div>
     </div>
     <div class="col-md-1 mx-4 shadow statistics_card text-center">
       <h6 class="mt-2" style="font-weight: bold;">긍정</h6>
-      <h4 id="statisticsCardPositive">35%</h4>
+      <h4 id="statisticsCardPositive"></h4>
+      <div class="spinner-grow  spinner-grow-sm text-dark temp-spinner mb-2" role="status"></div>
     </div>
     <div class="col-md-1 mx-4 shadow statistics_card text-center">
       <h6 class="mt-2" style="font-weight: bold;">부정</h6>
-      <h4 id="statisticsCardNegative">55%</h4>
+      <h4 id="statisticsCardNegative"></h4>
+      <div class="spinner-grow  spinner-grow-sm text-dark temp-spinner mb-2" role="status"></div>
     </div>
     <div class="col-md-1 mx-4 shadow statistics_card text-center">
       <h6 class="mt-2" style="font-weight: bold;">노말</h6>
-      <h4 id="statisticsCardNormal">10%</h4>
+      <h4 id="statisticsCardNormal"></h4>
+      <div class="spinner-grow  spinner-grow-sm text-dark temp-spinner mb-2" role="status"></div>
     </div>
     <div class="col-md-1 mx-4 shadow statistics_card text-center">
       <h6 class="mt-2" style="font-weight: bold;">확진자수</h6>
-      <h4 id="infectionsCount">2125</h4>
+      <h4 id="infectionsCount"></h4>
+      <div class="spinner-grow spinner-grow-sm text-dark temp-spinner mb-2 " role="status"></div>
     </div>
   </div>
 </div>
 
 
 
-<!--Pie chart Graph-->
+<!--Pie Graph--> <!--Ranking Chart-->
 <div class="container-fluid mt-5 text-center">
   <h3>긍정-부정 분석 결과</h3>
-  <div class="pie_chart mx-auto mt-3" id="divForPieChart">
-    <canvas id="positiveNegativePieChart" ></canvas>
+  <div class="pie_chart mx-auto mt-3 row justify-content-center" id="divForPieChart">
+      <div class="col-md-6 text-center">
+          <h2>waiting..</h2>
+      </div>
   </div>
 </div>
 
@@ -77,98 +84,13 @@
     <table class="table table-striped table-bordered">
       <thead>
         <tr class="bg-whitepurple">
-          <th scope="col">긍정, 부정</th>
+          <th scope="col">기사 입력 시간</th>
           <th scope="col">언론사</th>
           <th scope="col">기사 제목</th>
-          <th scope="col">링크</th>
-          <th scope="col">기사 입력 시간</th>
+          <th scope="col">긍정, 부정</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <th scope="row"><h7 class="newsNegative">부정</h7></th>
-          <td>조선일보</td>
-          <td>코로나 시국에 홍대에서 집합을?</td>
-          <td><a href="https://www.hongdae.tk">www.hongdae.tk</a></td>
-          <td>2021.11.16 18:25:19</td>
-        </tr>
-        <tr>
-          <th scope="row"><h7 class="newsNegative">부정</h7></th>
-          <td>서울신문</td>
-          <td>코로나 시국에 대선주자가 파티를?</td>
-          <td><a href="https://www.hongdae.tk">www.naver.com/josun-jjang</a></td>
-          <td>2021.11.16 17:23:19</td>
-        </tr>
-        <tr>
-          <th scope="row"><h7 class="newsPositive">긍정</h7></th>
-          <td>중앙일보</td>
-          <td>코로나에도 따뜻한 손길이..</td>
-          <td><a href="https://www.hongdae.tk">www.ddaddutthannsongil.com</a></td>
-          <td>2021.11.16 15:22:50</td>
-        </tr>
-        <tr>
-          <th scope="row"><h7 class="newsNegative">부정</h7></th>
-          <td>조선일보</td>
-          <td>코로나 시국에 홍대에서 집합을?</td>
-          <td><a href="https://www.hongdae.tk">www.hongdae.tk</a></td>
-          <td>2021.11.16 18:25:19</td>
-        </tr>
-        <tr>
-          <th scope="row"><h7 class="newsNegative">부정</h7></th>
-          <td>서울신문</td>
-          <td>코로나 시국에 대선주자가 파티를?</td>
-          <td><a href="https://www.hongdae.tk">www.naver.com/josun-jjang</a></td>
-          <td>2021.11.16 17:23:19</td>
-        </tr>
-        <tr>
-          <th scope="row"><h7 class="newsPositive">긍정</h7></th>
-          <td>중앙일보</td>
-          <td>코로나에도 따뜻한 손길이..</td>
-          <td><a href="https://www.hongdae.tk">www.ddaddutthannsongil.com</a></td>
-          <td>2021.11.16 15:22:50</td>
-        </tr>
-        <tr>
-          <th scope="row"><h7 class="newsNegative">부정</h7></th>
-          <td>조선일보</td>
-          <td>코로나 시국에 홍대에서 집합을?</td>
-          <td><a href="https://www.hongdae.tk">www.hongdae.tk</a></td>
-          <td>2021.11.16 18:25:19</td>
-        </tr>
-        <tr>
-          <th scope="row"><h7 class="newsNegative">부정</h7></th>
-          <td>서울신문</td>
-          <td>코로나 시국에 대선주자가 파티를?</td>
-          <td><a href="https://www.hongdae.tk">www.naver.com/josun-jjang</a></td>
-          <td>2021.11.16 17:23:19</td>
-        </tr>
-        <tr>
-          <th scope="row"><h7 class="newsPositive">긍정</h7></th>
-          <td>중앙일보</td>
-          <td>코로나에도 따뜻한 손길이..</td>
-          <td><a href="https://www.hongdae.tk">www.ddaddutthannsongil.com</a></td>
-          <td>2021.11.16 15:22:50</td>
-        </tr>
-        <tr>
-          <th scope="row"><h7 class="newsNegative">부정</h7></th>
-          <td>조선일보</td>
-          <td>코로나 시국에 홍대에서 집합을?</td>
-          <td><a href="https://www.hongdae.tk">www.hongdae.tk</a></td>
-          <td>2021.11.16 18:25:19</td>
-        </tr>
-        <tr>
-          <th scope="row"><h7 class="newsNegative">부정</h7></th>
-          <td>서울신문</td>
-          <td>코로나 시국에 대선주자가 파티를?</td>
-          <td><a href="https://www.hongdae.tk">www.naver.com/josun-jjang</a></td>
-          <td>2021.11.16 17:23:19</td>
-        </tr>
-        <tr>
-          <th scope="row"><h7 class="newsPositive">긍정</h7></th>
-          <td>중앙일보</td>
-          <td>코로나에도 따뜻한 손길이..</td>
-          <td><a href="https://www.hongdae.tk">www.ddaddutthannsongil.com</a></td>
-          <td>2021.11.16 15:22:50</td>
-        </tr>
+      <tbody id="newsChartTbody">
       </tbody>
     </table>
   </div>

@@ -49,8 +49,8 @@ a {
     font-size: 20px;
 }
 .pie_chart {
-    width: 400px; 
     height: 400px;
+    width: 400px;
 }
 .line_chart {
     width: 600px; 
@@ -61,12 +61,16 @@ a {
     height: 600px;
 }
 .newsPositive {
-    color:cornflowerblue;
-    font-weight: bold
+    color:cornflowerblue !important;
+    font-weight: bold !important;
 }
 .newsNegative {
-    color:deeppink;
-    font-weight: bold;
+    color:deeppink !important; 
+    font-weight: bold !important;
+}
+.newsNormal {
+    color:darkkhaki !important;
+    font-weight: bold !important;
 }
 .statistics_card {
     background-color:lightgreen;
