@@ -4,20 +4,20 @@
 
 <!--Category Select Section-->
 <div class="container-fluid">
-    <div class="mx-2 row">
-        <div class="col-md-4 mt-4 text-center">
+    <div class="mx-2 row justify-content-center">
+        <div class="col-md-3 mt-4 text-center">
            <label class="selectorLabel">날짜&nbsp;&nbsp;</label>
             <select class="selectorForm text-center" id="selectDate">
               <option value="total">전체</option>
             </select>
         </div>
-        <div class="col-md-4 mt-4 text-center">
+        <div class="col-md-3 mt-4 text-center">
            <label class="selectorLabel">키워드&nbsp;&nbsp;</label>
             <select class="selectorForm text-center" id="selectKeyword">
               <option value="total">전체</option>
             </select>
         </div>
-        <div class="col-md-4 mt-4 text-center">
+        <div class="col-md-3 mt-4 text-center">
            <label class="selectorLabel">언론사&nbsp;&nbsp;</label>
             <select class="selectorForm text-center" id="selectCompany">
               <option value="total">전체</option>
@@ -72,8 +72,14 @@
 <!--Line Graph-->
 <div class="container-fluid mt-5 text-center">
   <h3>일별 긍정, 부정 분석 결과</h3>
-  <div class="line_chart mx-auto mt-3">
-    <canvas id="positiveNegativeLineChart" ></canvas>
+  <div>
+      <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForLastMonth" data-monthChange="-1">저번 달</button>
+      <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForNextMonth" data-monthChange="1">다음 달</button>
+  </div>
+  <div class="line_chart mx-auto mt-3 row justify-content-center" id="divForLineChart">
+    <div class="col-md-6 text-center">
+      <h2>waiting..</h2>
+    </div>
   </div>
 </div>
 
@@ -91,6 +97,7 @@
         </tr>
       </thead>
       <tbody id="newsChartTbody">
+          <td colspan="100%"><h3>waiting..</h3></td>
       </tbody>
     </table>
   </div>
