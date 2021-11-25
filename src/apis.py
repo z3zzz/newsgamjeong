@@ -3,6 +3,8 @@ from flask import Blueprint, jsonify, request
 import concatParts as cp
 import concatNewses as cn
 import getSelectors as gs
+import getLineGraph as gl
+import getInfections as gi
 
 apis = Blueprint(__name__, 'apis')
 
@@ -104,5 +106,18 @@ def selectors():
             temp.append(selector)
         result[key] = temp
     return jsonify(result)
+
+@apis.route('/api/line_graph', methods=["GET"])
+def line_graph():
+    month = int(request.args.get("month"))
+
+    return jsonify(gl.getLineGraphData(month))
+
+@apis.route('/api/infections', methods=["GET"])
+def infections():
+    month = int(request.args.get("month"))
+
+    return jsonify(gi.getInfectionsData(month))
+
 
 
