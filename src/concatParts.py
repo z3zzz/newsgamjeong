@@ -15,6 +15,32 @@ for c in col.find({}):
         if key != "_id":
             data[key] = c[key]
 
+def convert_count_to_ratio(result2):
+    result3 = {"positive_ranking": [], "negative_ranking": [], "normal_ranking": []}
+
+    print(result2)
+    for company in result2["positive_ranking"].keys():
+        print(company)
+        positive_count = result2["positive_ranking"][company]
+        negative_count = result2["negative_ranking"][company]
+        normal_count = result2["normal_ranking"][company]
+        total = positive_count + negative_count + normal_count
+
+        positive_ratio = (positive_count / total) * 100
+        negative_ratio = (negative_count / total) * 100
+        normal_ratio = (normal_count / total) * 100
+
+        result3["positive_ranking"].append([company,round(positive_ratio,1)])
+        result3["negative_ranking"].append([company,round(negative_ratio,1)])
+        result3["normal_ranking"].append([company,round(normal_ratio,1)])
+
+
+    result3["positive_ranking"] = sorted(result3["positive_ranking"], key=lambda x:x[1], reverse=True )[:5]
+    result3["negative_ranking"] = sorted(result3["negative_ranking"], key=lambda x:x[1], reverse=True )[:5]
+    result3["normal_ranking"] = sorted(result3["normal_ranking"], key=lambda x:x[1], reverse=True )[:5]
+
+    return result3
+
 # 1
 def date_total_keyword_specific_company_specific(keyword, company):
     result = {
@@ -113,21 +139,19 @@ def date_specific_keyword_specific_company_total(date, keyword):
                         else:
                             result2["normal_ranking"][news_company] += data[news_date][category][news_company]["normal"]
 
-    result2["positive_ranking"] = sorted(result2["positive_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
-    result2["negative_ranking"] = sorted(result2["negative_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
-    result2["normal_ranking"] = sorted(result2["normal_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
+    result3 = convert_count_to_ratio(result2)
 
     result = {
         "statistics": result1,
-        "news_ranking": result2
+        "news_ranking": result3
     }
 
     return result
 
 '''
 코드 테스트용
-'''
 pprint(date_specific_keyword_specific_company_total("2021.11.16", "경제"))
+'''
 
 # 4
 def date_specific_keyword_total_company_total(date):
@@ -168,21 +192,19 @@ def date_specific_keyword_total_company_total(date):
                     else:
                         result2["normal_ranking"][news_company] += data[news_date][category][news_company]["normal"]
 
-    result2["positive_ranking"] = sorted(result2["positive_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
-    result2["negative_ranking"] = sorted(result2["negative_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
-    result2["normal_ranking"] = sorted(result2["normal_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
+    result3 = convert_count_to_ratio(result2)
 
     result = {
         "statistics": result1,
-        "news_ranking": result2
+        "news_ranking": result3
     }
 
     return result
 
 '''
 코드 테스트용
-'''
 pprint(date_specific_keyword_total_company_total("2021.11.16"))
+'''
 
 # 5
 def date_total_keyword_specific_company_total(keyword):
@@ -229,21 +251,19 @@ def date_total_keyword_specific_company_total(keyword):
                     infection_flag = 1
                     break
 
-    result2["positive_ranking"] = sorted(result2["positive_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
-    result2["negative_ranking"] = sorted(result2["negative_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
-    result2["normal_ranking"] = sorted(result2["normal_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
+    result3 = convert_count_to_ratio(result2)
 
     result = {
         "statistics": result1,
-        "news_ranking": result2
+        "news_ranking": result3
     }
 
     return result
 
 '''
 코드 테스트용
-'''
 pprint(date_total_keyword_specific_company_total("경제"))
+'''
 
 # 6
 def date_total_keyword_total_company_specific(company):
@@ -345,18 +365,16 @@ def date_total_keyword_total_company_total():
                     infection_flag = 1
                     break
 
-    result2["positive_ranking"] = sorted(result2["positive_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
-    result2["negative_ranking"] = sorted(result2["negative_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
-    result2["normal_ranking"] = sorted(result2["normal_ranking"].items(), key=lambda x:x[1], reverse=True )[:5]
+    result3 = convert_count_to_ratio(result2)
 
     result = {
         "statistics": result1,
-        "news_ranking": result2
+        "news_ranking": result3
     }
 
     return result
 
 '''
 코드 테스트용
-'''
 pprint(date_total_keyword_total_company_total())
+'''
