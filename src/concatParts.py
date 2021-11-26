@@ -16,7 +16,7 @@ for c in col.find({}):
             data[key] = c[key]
 
 def convert_count_to_ratio(result2):
-    result3 = {"positive_ranking": [], "negative_ranking": [], "normal_ranking": [], "number_of_newses": []}
+    result3 = {"positive_ranking": [], "negative_ranking": [], "normal_ranking": [], "number_of_newses": {}}
     minimum_number = 10
 
     for company in result2["positive_ranking"].keys():
@@ -33,7 +33,7 @@ def convert_count_to_ratio(result2):
             result3["positive_ranking"].append([company,round(positive_ratio,1)])
             result3["negative_ranking"].append([company,round(negative_ratio,1)])
             result3["normal_ranking"].append([company,round(normal_ratio,1)])
-            result3["number_of_newses"].append([company, total])
+            result3["number_of_newses"][company] = total
 
 
     result3["positive_ranking"] = sorted(result3["positive_ranking"], key=lambda x:x[1], reverse=True )[:5]

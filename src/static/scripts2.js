@@ -134,11 +134,17 @@ const drawRankingChart = async (kind) => {
         rankings = responseData.news_ranking.normal_ranking
         label = '중립기사 비율 상위 5개사'
     }
+//여기 해야 함
+    let numberOfNewses = responseData.news_ranking.number_of_newses
 
     let rankingChartElem = document.querySelector('#positiveNegativeRankingChart')
 
     const dataForRanking = {
-        labels: [rankings[0][0], rankings[1][0], rankings[2][0], rankings[3][0], rankings[4][0]],
+        labels: [rankings[0][0] + ` (전체기사 ${numberOfNewses[rankings[0][0]]}개)`,
+            rankings[1][0] + ` (전체기사 ${numberOfNewses[rankings[1][0]]}개)`,
+            rankings[2][0] + ` (전체기사 ${numberOfNewses[rankings[2][0]]}개)`,
+            rankings[3][0] + ` (전체기사 ${numberOfNewses[rankings[3][0]]}개)`,
+            rankings[4][0] + ` (전체기사 ${numberOfNewses[rankings[4][0]]}개)`],
         datasets: [{
             label: label,
             data: [rankings[0][1], rankings[1][1], rankings[2][1], rankings[3][1], rankings[4][1]],
