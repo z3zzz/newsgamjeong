@@ -4,6 +4,7 @@ import concatParts as cp
 import concatNewses as cn
 import getSelectors as gs
 import getLineGraph as gl
+import getLineGraph6 as gl6
 import getInfections as gi
 
 apis = Blueprint(__name__, 'apis')
@@ -112,6 +113,13 @@ def line_graph():
     month = int(request.args.get("month"))
 
     return jsonify(gl.getLineGraphData(month))
+
+@apis.route('/api/line_graph6', methods=["GET"])
+def line_graph6():
+    month = int(request.args.get("month"))
+    version = int(request.args.get("version"))
+
+    return jsonify(gl6.getLineGraph6Data(month, version))
 
 @apis.route('/api/infections', methods=["GET"])
 def infections():

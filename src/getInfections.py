@@ -37,5 +37,5 @@ def getInfectionsData(request_month):
 
 '''
 테스트용
-pprint(getInfectionsData(8))
+pprint(getInfectionsData(1))
 '''
