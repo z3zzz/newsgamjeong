@@ -16,11 +16,10 @@ for c in col.find({}):
             data[key] = c[key]
 
 def convert_count_to_ratio(result2):
-    result3 = {"positive_ranking": [], "negative_ranking": [], "normal_ranking": []}
+    result3 = {"positive_ranking": [], "negative_ranking": [], "normal_ranking": [], "number_of_newses": []}
+    minimum_number = 10
 
-    print(result2)
     for company in result2["positive_ranking"].keys():
-        print(company)
         positive_count = result2["positive_ranking"][company]
         negative_count = result2["negative_ranking"][company]
         normal_count = result2["normal_ranking"][company]
@@ -30,9 +29,11 @@ def convert_count_to_ratio(result2):
         negative_ratio = (negative_count / total) * 100
         normal_ratio = (normal_count / total) * 100
 
-        result3["positive_ranking"].append([company,round(positive_ratio,1)])
-        result3["negative_ranking"].append([company,round(negative_ratio,1)])
-        result3["normal_ranking"].append([company,round(normal_ratio,1)])
+        if total > minimum_number:
+            result3["positive_ranking"].append([company,round(positive_ratio,1)])
+            result3["negative_ranking"].append([company,round(negative_ratio,1)])
+            result3["normal_ranking"].append([company,round(normal_ratio,1)])
+            result3["number_of_newses"].append([company, total])
 
 
     result3["positive_ranking"] = sorted(result3["positive_ranking"], key=lambda x:x[1], reverse=True )[:5]
@@ -106,12 +107,12 @@ def date_specific_keyword_specific_company_total(date, keyword):
         "positive": 0,
         "negative": 0,
         "normal": 0,
-        "infections": 0
+        "infections": 0,
     }
     result2 = {
         "positive_ranking": {},
         "negative_ranking": {},
-        "normal_ranking": {}
+        "normal_ranking": {},
     }
     for news_date in data.keys():
         if news_date == date:
@@ -143,15 +144,15 @@ def date_specific_keyword_specific_company_total(date, keyword):
 
     result = {
         "statistics": result1,
-        "news_ranking": result3
+        "news_ranking": result3,
     }
 
     return result
 
 '''
 코드 테스트용
-pprint(date_specific_keyword_specific_company_total("2021.11.16", "경제"))
 '''
+pprint(date_specific_keyword_specific_company_total("2021.11.16", "경제"))
 
 # 4
 def date_specific_keyword_total_company_total(date):
