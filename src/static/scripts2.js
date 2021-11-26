@@ -126,13 +126,13 @@ const drawRankingChart = async (kind) => {
 
     if (kind === 'positive'){
         rankings = responseData.news_ranking.positive_ranking
-        label = '긍정 기사 개수 상위 5개사'
+        label = '긍정기사 비율 상위 5개사'
     } else if (kind === 'negative') {
         rankings = responseData.news_ranking.negative_ranking
-        label = '부정 기사 개수 상위 5개사'
+        label = '부정기사 비율 상위 5개사'
     } else {
         rankings = responseData.news_ranking.normal_ranking
-        label = '노말 기사 개수 상위 5개사'
+        label = '중립기사 비율 상위 5개사'
     }
 
     let rankingChartElem = document.querySelector('#positiveNegativeRankingChart')
@@ -173,17 +173,30 @@ const createSelectBoxForRankingChart = async () => {
             <select class="selectorForm text-center mb-2" id="selectRankingKind">
               <option value="positive">긍정</option>
               <option value="negative">부정</option>
-              <option value="normal">노말</option>
+              <option value="normal">중립</option>
             </select>
 
     `
 }
+
 let newses
+let currentNewsPage
+let currentNewsPageString
+let rows = 20
+let totalPage
+let pageCommentSpace = document.querySelector('#commentForNewsPage')
 const changeNewsChartContent = async reqData => {
+    currentNewsPage = 1
+    let start = rows * (currentNewsPage - 1)
+    let end = rows * (currentNewsPage)
+
     newses = await getJsonFromApi("newses?", reqData)
+
+    totalPage = Math.ceil(newses.length / rows)
+
     let newsChartTbody = document.querySelector('#newsChartTbody')
     newsChartTbody.innerHTML = ""
-    newses.slice(0,20).forEach(elem => {
+    newses.slice(start,end).forEach(elem => {
         let trElem = document.createElement('tr')
         let td1 = document.createElement('td')
         let td2 = document.createElement('td')
@@ -196,7 +209,6 @@ const changeNewsChartContent = async reqData => {
         a.href = elem.link
         a.innerText = elem.title
         td3.append(a)
-        td4.innerText = elem.label
 
         label = elem.label
 
@@ -206,7 +218,9 @@ const changeNewsChartContent = async reqData => {
             td4.classList.add('newsNegative')
         } else {
             td4.classList.add('newsNormal')
+            elem.label = "중립"
         }
+        td4.innerText = elem.label
 
         trElem.append(td1)
         trElem.append(td2)
@@ -215,6 +229,80 @@ const changeNewsChartContent = async reqData => {
 
         newsChartTbody.append(trElem)
     })
+    addEventToId("click", "buttonForLastPage", changePageForNewses)
+    addEventToId("click", "buttonForNextPage", changePageForNewses)
+
+    currentNewsPageString = `현재 페이지: ${currentNewsPage} |  전체 페이지: ${totalPage}`
+    pageCommentSpace.innerText = currentNewsPageString
+}
+
+const changePageForNewses = (e) => {
+    let requestPage = currentNewsPage + parseInt(e.target.dataset.pagechange)
+
+    if (requestPage > totalPage) {
+        alert("더 이상 앞으로 나아갈 수 없습니다 :(")
+        return
+    }
+
+    let tempPage
+    if (requestPage <= 0) {
+        tempPage = totalPage + requestPage
+    } else {
+        tempPage = requestPage
+    }
+
+    if (requestPage <=0 && tempPage === 0) {
+        alert("더 이상 뒤로 가실 수 없습니다 :(")
+
+        return
+    }
+
+    let start = rows * (requestPage - 1)
+    let end = rows * (requestPage)
+
+    end === 0 ? end=-1 : end=end
+
+    console.log(` requestPage ${requestPage}, totalPage ${totalPage}`, start, end)
+
+    let newsChartTbody = document.querySelector('#newsChartTbody')
+    newsChartTbody.innerHTML = ""
+    newses.slice(start,end).forEach(elem => {
+        let trElem = document.createElement('tr')
+        let td1 = document.createElement('td')
+        let td2 = document.createElement('td')
+        let td3 = document.createElement('td')
+        let a = document.createElement('a')
+        let td4 = document.createElement('td')
+
+        td1.innerText = elem.timestring
+        td2.innerText = elem.company
+        a.href = elem.link
+        a.innerText = elem.title
+        td3.append(a)
+
+        label = elem.label
+
+        if (label === '긍정'){
+            td4.classList.add('newsPositive')
+        } else if (label === "부정") {
+            td4.classList.add('newsNegative')
+        } else {
+            td4.classList.add('newsNormal')
+            elem.label = "중립"
+        }
+        td4.innerText = elem.label
+
+        trElem.append(td1)
+        trElem.append(td2)
+        trElem.append(td3)
+        trElem.append(td4)
+
+        newsChartTbody.append(trElem)
+    })
+
+    currentNewsPageString = `현재 페이지: ${tempPage} |  전체 페이지: ${totalPage}`
+    pageCommentSpace.innerText = currentNewsPageString
+    currentNewsPage = requestPage
 }
 
 const makeNewRankingChart = async (e) => {
@@ -389,15 +477,16 @@ const drawLineChart6 = async dataArray => {
     let values_opinions = []
     let values_politics = []
     let n = 3 // 반올림 소수점
+    let indexes = [0,1,2,3,4,5,6]
 
     dataArray.forEach(elem => {
         dates.push(String(Object.keys(elem)).slice(5,10))
-        values_economics.push(parseFloat(Object.values(elem)[0]["경제"]).toFixed(n))
-        values_socials.push(parseFloat(Object.values(elem)[0]["사회"]).toFixed(n))
-        values_lifes.push(parseFloat(Object.values(elem)[0]["생활문화"]).toFixed(n))
-        values_worlds.push(parseFloat(Object.values(elem)[0]["세계"]).toFixed(n))
-        values_opinions.push(parseFloat(Object.values(elem)[0]["오피니언"]).toFixed(n))
-        values_politics.push(parseFloat(Object.values(elem)[0]["정치"]).toFixed(n))
+        values_economics.push(-parseFloat(Object.values(elem)[0]["경제"]).toFixed(n))
+        values_socials.push(-parseFloat(Object.values(elem)[0]["사회"]).toFixed(n))
+        values_lifes.push(-parseFloat(Object.values(elem)[0]["생활문화"]).toFixed(n))
+        values_worlds.push(-parseFloat(Object.values(elem)[0]["세계"]).toFixed(n))
+        values_opinions.push(-parseFloat(Object.values(elem)[0]["오피니언"]).toFixed(n))
+        values_politics.push(-parseFloat(Object.values(elem)[0]["정치"]).toFixed(n))
     })
 
     const dataForEconomics = {
@@ -524,6 +613,9 @@ const drawLineChart6 = async dataArray => {
             },
         },
         stacked: false,
+    })
+    indexes.forEach(value => {
+        lineChart6.hide(value)
     })
 }
 
