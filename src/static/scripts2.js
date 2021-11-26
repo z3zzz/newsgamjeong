@@ -220,7 +220,7 @@ const changeNewsChartContent = async reqData => {
 const makeNewRankingChart = async (e) => {
         document.querySelector('#divForPieChart').innerHTML = await createSelectBoxForRankingChart()
         document.querySelector('#divForPieChart').innerHTML += await createRankingChartCanvas()
-        document.querySelector('#divForPieChart').style.width = '800px'
+        document.querySelector('#divForPieChart').style.width = '900px'
         if (!e) {
             await drawRankingChart('positive')
         } else {
@@ -262,6 +262,7 @@ const drawLineChart = async (month) => {
         borderColor: 'rgb(50, 168, 82)',
         backgroundColor: 'rgb(50, 168, 82)',
         yAxisID: 'y',
+        xAxisID: 'x'
     }
 
     let response_infections = await getJsonFromApi('infections?', {month})
@@ -270,7 +271,7 @@ const drawLineChart = async (month) => {
 
     response_infections.data.forEach(elem => {
         dates_infections.push(String(elem[0]).slice(5,10))
-        values_infections.push(parseInt(elem[1]))
+        values_infections.push(parseInt(elem[1].replace(/,/g,'')))
     })
     const dataForInfections = {
         type: 'bar',
@@ -279,12 +280,13 @@ const drawLineChart = async (month) => {
         borderColor: '#87ded5',
         backgroundColor: '#87ded5',
         yAxisID: 'y1',
+        xAxisID: 'x',
     }
 
     new Chart(lineChartElem,{
         data: {
             datasets: [dataForLine, dataForInfections],
-            labels: dates
+            labels: dates.sort()
         },
         options: {
             // responsive: true,
@@ -334,7 +336,7 @@ const getNewData = async () => {
         makeNewRankingChart(null)
     } else {
         document.querySelector('#divForPieChart').innerHTML = await createPieChartCanvas()
-        document.querySelector('#divForPieChart').style.width = '400px'
+        document.querySelector('#divForPieChart').style.width = '450px'
         await drawPieChart()
     }
 
@@ -356,7 +358,179 @@ const getNewData = async () => {
     }
 
     await changeNewsChartContent(reqData)
+
 }
+
+// 꺾은선 4가지 버전 테스트용
+
+const makeLineChart6 = async () => {
+    let requestVersion = document.querySelector('#selectTestVersion').value
+    let requestMonth = document.querySelector('#selectTestMonth').value
+    let divForLineChart6 = document.querySelector('#divForLineChart6')
+    let response = await getJsonFromApi('line_graph6?', {month: requestMonth, version: requestVersion})
+
+    if (response.result === "success") {
+        divForLineChart6.innerHTML = await createNewLineChart6Canvas()
+        await drawLineChart6(response.data)
+    }
+    if (response?.result !== "success" ) {
+        divForLineChart6.innerHTML = `<h2>해당 데이터는 없어요</h2>`
+    }
+}
+
+const createNewLineChart6Canvas = async () => `<canvas id="lineChart6"></canvas>`
+const drawLineChart6 = async dataArray => {
+    let lineChartElem = document.getElementById('lineChart6')
+    let dates = []
+    let values_economics = []
+    let values_socials = []
+    let values_lifes = []
+    let values_worlds = []
+    let values_opinions = []
+    let values_politics = []
+    let n = 3 // 반올림 소수점
+
+    dataArray.forEach(elem => {
+        dates.push(String(Object.keys(elem)).slice(5,10))
+        values_economics.push(parseFloat(Object.values(elem)[0]["경제"]).toFixed(n))
+        values_socials.push(parseFloat(Object.values(elem)[0]["사회"]).toFixed(n))
+        values_lifes.push(parseFloat(Object.values(elem)[0]["생활문화"]).toFixed(n))
+        values_worlds.push(parseFloat(Object.values(elem)[0]["세계"]).toFixed(n))
+        values_opinions.push(parseFloat(Object.values(elem)[0]["오피니언"]).toFixed(n))
+        values_politics.push(parseFloat(Object.values(elem)[0]["정치"]).toFixed(n))
+    })
+
+    const dataForEconomics = {
+        type: 'line',
+        data: values_economics,
+        label: "경제",
+        borderColor: '#f5a91b',
+        backgroundColor: '#f5a91b',
+ //       yAxisID: 'y1',
+    }
+
+    const dataForSocials = {
+        type: 'line',
+        data: values_socials,
+        label: "사회",
+        borderColor: '#ebcf60',
+        backgroundColor: '#ebcf60',
+   //     yAxisID: 'y2',
+    }
+
+    const dataForLifes = {
+        type: 'line',
+        data: values_lifes,
+        label: "생활문화",
+        borderColor: '#5dc97a',
+        backgroundColor: '#5dc97a',
+     //   yAxisID: 'y3',
+    }
+
+    const dataForWorlds = {
+        type: 'line',
+        data: values_worlds,
+        label: "세계",
+        borderColor: '#337aa1',
+        backgroundColor: '#337aa1',
+       // yAxisID: 'y4',
+    }
+
+    const dataForOpinions = {
+        type: 'line',
+        data: values_opinions,
+        label: "오피니언",
+        borderColor: '#68328c',
+        backgroundColor: '#68328c',
+//        yAxisID: 'y5',
+    }
+
+    const dataForPolitics = {
+        type: 'line',
+        data: values_politics,
+        label: "정치",
+        borderColor: '#b54326 ',
+        backgroundColor: '#b54326 ',
+  //      yAxisID: 'y6',
+    }
+
+    let month = parseInt(dates[0].slice(0,2))
+    let response_infections = await getJsonFromApi('infections?', {month})
+    let values_infections = []
+
+    response_infections.data.forEach(elem => {
+        values_infections.push(parseInt(elem[1].replace(/,/g,'')))
+    })
+    const dataForInfections = {
+        type: 'bar',
+        data: values_infections,
+        label: "감염자수",
+        borderColor: '#87ded5',
+        backgroundColor: '#87ded5',
+        yAxisID: 'y7',
+    }
+
+
+    const lineChart6 = new Chart(lineChartElem,{
+        data: {
+            datasets: [dataForEconomics, dataForSocials, dataForLifes, dataForWorlds, dataForOpinions, dataForPolitics, dataForInfections],
+            labels: dates.sort()
+        },
+        options: {
+            // responsive: true,
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            },
+            scales: {
+                y1: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                },
+                y7: {
+                    type: 'linear',
+                    display: true,
+                    position: 'right',
+                    grid: {
+                        drawOnChartArea: false,
+                    }
+                },
+            },
+            plugins: {
+                legend: {
+                    onClick: (event, legendItem) => {
+                        let labelToDatasetIndex = {
+                            "경제": 0,
+                            "사회": 1,
+                            "생활문화": 2,
+                            "세계": 3,
+                            "오피니언": 4,
+                            "정치": 5,
+                            "감염자수": 6,
+                        }
+
+                        let index = labelToDatasetIndex[legendItem.text]
+                        const currentVisibility = lineChart6.isDatasetVisible(index)
+
+                        if (currentVisibility === true) {
+                            lineChart6.hide(index)
+                        } else {
+                            lineChart6.show(index)
+                        }
+
+                    },
+                },
+            },
+        },
+        stacked: false,
+    })
+}
+
+addEventToId("change","selectTestMonth", makeLineChart6)
+addEventToId("change","selectTestVersion", makeLineChart6)
+
+
 
 const deleteTempSpinners = async () => {
     document.querySelectorAll('.temp-spinner').forEach(elem => {
@@ -370,6 +544,7 @@ addEventToId("change", "selectCompany", getNewData)
 const getFirstData = async () => {
     await getSelectors()
     await getNewData()
+    await makeLineChart6() // 테스트용
 }
 
 if (location.pathname === "/") getFirstData()
