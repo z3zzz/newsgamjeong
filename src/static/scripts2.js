@@ -86,9 +86,10 @@ const createPieChartCanvas = async ()  => {
     return `<canvas id="positiveNegativePieChart" ></canvas>`
 }
 
+let textSpaceForPie = document.querySelector('#rankingOrPieChartText')
 const drawPieChart = async () => {
     const dataForPie = {
-        labels: ['긍정','부정', '노말'],
+        labels: ['긍정','부정', '중립'],
         datasets: [{
           label: 'positive-negative',
           data: [data.positive, data.negative, data.normal],
@@ -97,7 +98,15 @@ const drawPieChart = async () => {
             'rgb(255, 99, 132)',
             'rgb(224, 240, 189)',
           ],
-          hoverOffset: 4
+          hoverOffset: 4,
+          datalabels: {
+            font: {
+                size: "18",
+                weight: "bold",
+            },
+            color: "#000000",
+            formatter: value => value + '개',
+        },
         }]
       };
 
@@ -108,14 +117,14 @@ const drawPieChart = async () => {
             data: dataForPie,
             options: {
                 plugins: {
-                    datalabels: {
+                    legend: {
                         display: true,
-                        color: "red",
                     },
                 },
             },
         })
     }
+    textSpaceForPie.innerText = `${company}사의 긍정, 부정, 중립 기사 수`
 
 }
 
@@ -137,7 +146,6 @@ const drawRankingChart = async (kind) => {
         rankings = responseData.news_ranking.normal_ranking
         label = '중립기사 비율 상위 5개사'
     }
-//여기 해야 함
     let numberOfNewses = responseData.news_ranking.number_of_newses
 
     let rankingChartElem = document.querySelector('#positiveNegativeRankingChart')
@@ -150,10 +158,20 @@ const drawRankingChart = async (kind) => {
             rankings[4][0] + ` (전체기사 ${numberOfNewses[rankings[4][0]]}개)`],
         datasets: [{
             label: label,
-            data: [rankings[0][1], rankings[1][1], rankings[2][1], rankings[3][1], rankings[4][1]],
+            data: [rankings[0][1], rankings[1][1], rankings[2][1], rankings[3][1], rankings[4][1],],
             backgroundColor: [
-                '#4A707A', '#7697A0', '#94B0B7', '#C2C8C5', '#DDDDDA'
-            ]
+                '#1fe074', '#00c698', '#00a9b5', '#008ac5', '#0069c0'
+            ].reverse(),
+            barThickness: 100,
+            datalabels: {
+                font: {
+                    size: "18",
+                    weight: "bold",
+                },
+                color: "#000000",
+                anchor: 'end',
+                formatter: value => value + '%',
+            },
         }]
 
     }
@@ -165,17 +183,19 @@ const drawRankingChart = async (kind) => {
                 y: {
                     min: 0,
                     max:100,
-                }
+                },
             },
-            title: {
-                display: true,
-                text: label
-            }
+            plugins: {
+                legend: {
+                    display: false,
+                },
+            },
         }
 
     })
     document.querySelector('#selectRankingKind').value = kind
     addEventToId("change", "selectRankingKind", makeNewRankingChart)
+    textSpaceForPie.innerText = `${Object.keys(numberOfNewses).length}개 언론사들 중 긍정, 부정, 중립 비율 랭킹`
 }
 
 const createSelectBoxForRankingChart = async () => {
@@ -306,7 +326,7 @@ const changePageForNewses = () => {
 
     end === 0 ? end=-1 : end=end
 
-    console.log(` requestPage ${requestPage}, totalPage ${totalPage}`, start, end)
+    //console.log(` requestPage ${requestPage}, totalPage ${totalPage}`, start, end)
 
     let newsChartTbody = document.querySelector('#newsChartTbody')
     newsChartTbody.innerHTML = ""
@@ -463,10 +483,11 @@ const drawLineChart = async (month) => {
 
 let currentMonth = -1
 let maxMonth = 5
+let company
 const getNewData = async () => {
     let date = elemForSelectingDate?.value
     let keyword = elemForSelectingKeyword?.value
-    let company = elemForSelectingCompany?.value
+    company = elemForSelectingCompany?.value
 
     let reqData = {date, keyword, company}
 
