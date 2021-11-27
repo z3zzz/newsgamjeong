@@ -540,6 +540,10 @@ const makeFooterDiv = async () => {
       </div>
       <div>
         뉴스 출처: <a href="https://news.naver.com/">Naver 뉴스</a>
+      </div>
+      <div>
+        &#169; 2021 Copyright
+      </div>
     </div>
 
     `
