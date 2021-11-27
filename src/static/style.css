@@ -62,6 +62,12 @@ a {
 .margin-top-many-2 {
     margin-top: 100px;
 }
+.margin-top-many-3 {
+    margin-top: 1500px;
+}
+.margin-bottom-many {
+    margin-bottom: 400px;
+}
 .news_chart {
     width: 1100px; 
     height: 600px;
