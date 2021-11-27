@@ -2,6 +2,7 @@
 const addEventToId = async (event, _id, callback) => {
     document.querySelector(`#${_id}`)?.addEventListener(event, callback)
 }
+Chart.register(ChartDataLabels)
 
 let elemForSelectingDate = document.querySelector('#selectDate')
 let elemForSelectingKeyword = document.querySelector('#selectKeyword')
@@ -106,11 +107,13 @@ const drawPieChart = async () => {
             type: "pie",
             data: dataForPie,
             options: {
-                title: {
-                    display: true,
-                    text: 'Positive-Negative Chart'
-                }
-            }
+                plugins: {
+                    datalabels: {
+                        display: true,
+                        color: "red",
+                    },
+                },
+            },
         })
     }
 
@@ -213,9 +216,11 @@ const changeNewsChartContent = async reqData => {
 
         td1.innerText = elem.timestring
         td2.innerText = elem.company
+        td2.width = "12%"
         a.href = elem.link
         a.innerText = elem.title
         td3.append(a)
+        td3.width = "60%"
 
         label = elem.label
 
@@ -228,6 +233,7 @@ const changeNewsChartContent = async reqData => {
             elem.label = "중립"
         }
         td4.innerText = elem.label
+        td4.width = "10%"
 
         trElem.append(td1)
         trElem.append(td2)
@@ -236,17 +242,46 @@ const changeNewsChartContent = async reqData => {
 
         newsChartTbody.append(trElem)
     })
-    addEventToId("click", "buttonForLastPage", changePageForNewses)
-    addEventToId("click", "buttonForNextPage", changePageForNewses)
+    addEventToId("mousedown", "buttonForLastPage", changePage)
+    addEventToId("mouseup", "buttonForLastPage", changePage)
+    addEventToId("mousedown", "buttonForNextPage", changePage)
+    addEventToId("mouseup", "buttonForNextPage", changePage)
 
     currentNewsPageString = `현재 페이지: ${currentNewsPage} |  전체 페이지: ${totalPage}`
     pageCommentSpace.innerText = currentNewsPageString
 }
 
-const changePageForNewses = (e) => {
+
+let interval
+let timeFunc
+let eventForNewsPage
+let flagToStop = false
+const changePage = (e) => {
+    clearTimeout(timeFunc)
+    eventForNewsPage = e
+    if (eventForNewsPage.type === "mousedown") {
+        interval = 1300
+        flagToStop = false
+        loopFunc()
+    }
+    if (eventForNewsPage.type === "mouseup") clearTimeout(timeFunc)
+}
+const loopFunc = () => {
+    interval *= 0.8
+    interval <= 0.001? interval = 0.001 : interval = interval
+    changePageForNewses()
+    if ( ! flagToStop){
+        timeFunc = setTimeout(loopFunc, interval)
+    }
+}
+
+const changePageForNewses = () => {
+    let e = eventForNewsPage
     let requestPage = currentNewsPage + parseInt(e.target.dataset.pagechange)
 
     if (requestPage > totalPage) {
+        clearTimeout(timeFunc)
+        flagToStop = true
         alert("더 이상 앞으로 나아갈 수 없습니다 :(")
         return
     }
@@ -259,6 +294,8 @@ const changePageForNewses = (e) => {
     }
 
     if (requestPage <=0 && tempPage === 0) {
+        clearTimeout(timeFunc)
+        flagToStop = true
         alert("더 이상 뒤로 가실 수 없습니다 :(")
 
         return
@@ -283,9 +320,11 @@ const changePageForNewses = (e) => {
 
         td1.innerText = elem.timestring
         td2.innerText = elem.company
+        td2.width = "12%"
         a.href = elem.link
         a.innerText = elem.title
         td3.append(a)
+        td3.width = "60%"
 
         label = elem.label
 
@@ -298,6 +337,7 @@ const changePageForNewses = (e) => {
             elem.label = "중립"
         }
         td4.innerText = elem.label
+        td4.width = "10%"
 
         trElem.append(td1)
         trElem.append(td2)
@@ -402,6 +442,11 @@ const drawLineChart = async (month) => {
                     grid: {
                         drawOnChartArea: false,
                     }
+                },
+            },
+            plugins: {
+                datalabels: {
+                    display: false,
                 },
             },
         },
@@ -615,6 +660,9 @@ const drawLineChart6 = async dataArray => {
                         }
 
                     },
+                },
+                datalabels: {
+                    display: false,
                 },
             },
         },
