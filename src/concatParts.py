@@ -15,9 +15,22 @@ for c in col.find({}):
         if key != "_id":
             data[key] = c[key]
 
+def get_average_number_of_newses(result2):
+    total = 0
+    cnt = 0
+    for company in result2["positive_ranking"].keys():
+        positive_count = result2["positive_ranking"][company]
+        negative_count = result2["negative_ranking"][company]
+        normal_count = result2["normal_ranking"][company]
+
+        total += positive_count + negative_count + normal_count
+        cnt += 1
+
+    return round(total / cnt), cnt
+
 def convert_count_to_ratio(result2):
-    result3 = {"positive_ranking": [], "negative_ranking": [], "normal_ranking": [], "number_of_newses": {}}
-    minimum_number = 10
+    minimum_number, cnt = get_average_number_of_newses(result2)
+    result3 = {"positive_ranking": [], "negative_ranking": [], "normal_ranking": [], "number_of_newses": {}, "criteria": minimum_number, "number_of_companies": cnt}
 
     for company in result2["positive_ranking"].keys():
         positive_count = result2["positive_ranking"][company]
