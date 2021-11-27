@@ -55,8 +55,8 @@ const changeStatisticsCardValue = async reqData => {
     let normal =  data.normal
     let infections = data.infections
 
-    document.querySelector('#statisticsCardTotal').innerText = total
-    document.querySelector('#infectionsCount').innerText = infections
+    document.querySelector('#statisticsCardTotal').innerText = `${total}개`
+    document.querySelector('#infectionsCount').innerText = `${infections}명`
     document.querySelector('#statisticsCardPositive').innerText = `${Math.round(positive / total * 100)}%`
     document.querySelector('#statisticsCardNegative').innerText = `${Math.round(negative / total * 100)}%`
     document.querySelector('#statisticsCardNormal').innerText = `${Math.round(normal / total * 100)}%`
@@ -87,6 +87,7 @@ const createPieChartCanvas = async ()  => {
 }
 
 let textSpaceForPie = document.querySelector('#rankingOrPieChartText')
+let textSpaceForRanking = document.querySelector('#subtitleForRankingChart')
 const drawPieChart = async () => {
     const dataForPie = {
         labels: ['긍정','부정', '중립'],
@@ -124,7 +125,8 @@ const drawPieChart = async () => {
             },
         })
     }
-    textSpaceForPie.innerText = `${company}사의 긍정, 부정, 중립 기사 수`
+    textSpaceForPie.innerText = `${company} 사의 긍정, 부정, 중립 기사 수`
+    textSpaceForRanking.innerText = ''
 
 }
 
@@ -195,15 +197,16 @@ const drawRankingChart = async (kind) => {
     })
     document.querySelector('#selectRankingKind').value = kind
     addEventToId("change", "selectRankingKind", makeNewRankingChart)
-    textSpaceForPie.innerText = `${Object.keys(numberOfNewses).length}개 언론사들 중 긍정, 부정, 중립 비율 랭킹`
+    textSpaceForPie.innerText = `${responseData.news_ranking.number_of_companies}개 언론사들 중 긍정, 부정, 중립 비율 랭킹`
+    textSpaceForRanking.innerText = `(최소 기사 개수 기준: ${responseData.news_ranking.criteria}개 )`
 }
 
 const createSelectBoxForRankingChart = async () => {
     return `
             <select class="selectorForm text-center mb-2" id="selectRankingKind">
-              <option value="positive">긍정</option>
-              <option value="negative">부정</option>
-              <option value="normal">중립</option>
+              <option value="positive">&nbsp;긍정&nbsp;</option>
+              <option value="negative">&nbsp;부정&nbsp;</option>
+              <option value="normal">&nbsp;중립&nbsp;</option>
             </select>
 
     `
@@ -216,6 +219,10 @@ let rows = 20
 let totalPage
 let pageCommentSpace = document.querySelector('#commentForNewsPage')
 const changeNewsChartContent = async reqData => {
+    let newsChartTbody = document.querySelector('#newsChartTbody')
+    if (newses) {
+        newsChartTbody.innerHTML = `<td colspan="100%"><div class="mt-4 spinner-grow text-dark temp-spinner mb-2" role="status"></div></td>`
+    }
     currentNewsPage = 1
     let start = rows * (currentNewsPage - 1)
     let end = rows * (currentNewsPage)
@@ -224,7 +231,6 @@ const changeNewsChartContent = async reqData => {
 
     totalPage = Math.ceil(newses.length / rows)
 
-    let newsChartTbody = document.querySelector('#newsChartTbody')
     newsChartTbody.innerHTML = ""
     newses.slice(start,end).forEach(elem => {
         let trElem = document.createElement('tr')
@@ -287,8 +293,8 @@ const changePage = (e) => {
     if (eventForNewsPage.type === "mouseup") clearTimeout(timeFunc)
 }
 const loopFunc = () => {
-    interval *= 0.8
-    interval <= 0.001? interval = 0.001 : interval = interval
+    interval *= 0.85
+    interval <= 1? interval = 1 : interval=interval
     changePageForNewses()
     if ( ! flagToStop){
         timeFunc = setTimeout(loopFunc, interval)
@@ -519,8 +525,27 @@ const getNewData = async () => {
     }
 
     await changeNewsChartContent(reqData)
+    document.querySelector('#footer').innerHTML = await makeFooterDiv()
 
 }
+
+const makeFooterDiv = async () => {
+    return `
+    <div class="text-center px-3 margin-top-many3" style="background-color: rgba(0, 0, 0, 0.2);">
+      <div>
+        제작팀: Yeardream Team2 감정감정
+      </div>
+      <div>
+        Gitlab:  <a href="https://yeardream-gitlab.elice.io/yeardream-project/project-2">Yeardream Project 2팀</a>
+      </div>
+      <div>
+        뉴스 출처: <a href="https://news.naver.com/">Naver 뉴스</a>
+    </div>
+
+    `
+}
+
+
 
 // 꺾은선 4가지 버전 테스트용
 

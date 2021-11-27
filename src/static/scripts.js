@@ -231,4 +231,21 @@ if (tdsForSuggestStatus) {
 }
 
 
+window.addEventListener('scroll', function () {
+    let footer = document.querySelector('footer')
+    if ((window.innerHeight + window.scrollY) > document.body.offsetHeight) {
+        footer.classList.remove('d-none')
+        footer.classList.add('d-block')
+    }
 
+    if(window.oldScroll > window.scrollY) {
+        footer.classList.remove('d-block')
+        footer.classList.add('d-none')
+
+    }
+
+    window.oldScroll = window.scrollY;
+
+
+
+});

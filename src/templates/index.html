@@ -30,22 +30,22 @@
 <div class="conatiner-fluid">
   <div class="row mt-3 justify-content-center">
     <div class="col-md-1 mx-4 shadow statistics_card text-center">
-      <h6 class="mt-2" style="font-weight: bold;">총 개수</h6>
+      <h6 class="mt-2" style="font-weight: bold;">총 기사 수</h6>
       <h4 id="statisticsCardTotal"></h4>
       <div class="spinner-grow  spinner-grow-sm text-dark temp-spinner mb-2" role="status"></div>
     </div>
     <div class="col-md-1 mx-4 shadow statistics_card text-center">
-      <h6 class="mt-2" style="font-weight: bold;">긍정</h6>
+      <h6 class="mt-2" style="font-weight: bold;">긍정 비율</h6>
       <h4 id="statisticsCardPositive"></h4>
       <div class="spinner-grow  spinner-grow-sm text-dark temp-spinner mb-2" role="status"></div>
     </div>
     <div class="col-md-1 mx-4 shadow statistics_card text-center">
-      <h6 class="mt-2" style="font-weight: bold;">부정</h6>
+      <h6 class="mt-2" style="font-weight: bold;">부정 비율</h6>
       <h4 id="statisticsCardNegative"></h4>
       <div class="spinner-grow  spinner-grow-sm text-dark temp-spinner mb-2" role="status"></div>
     </div>
     <div class="col-md-1 mx-4 shadow statistics_card text-center">
-      <h6 class="mt-2" style="font-weight: bold;">중립</h6>
+      <h6 class="mt-2" style="font-weight: bold;">중립 비율</h6>
       <h4 id="statisticsCardNormal"></h4>
       <div class="spinner-grow  spinner-grow-sm text-dark temp-spinner mb-2" role="status"></div>
     </div>
@@ -116,7 +116,7 @@
 </div>
 
 <!--News Chart-->
-<div class="container-fluid text-center margin-top-many-2">
+<div class="container-fluid text-center margin-top-many-2 margin-bottom-many">
   <h3>뉴스별 긍정, 부정 분석 결과</h3>
   <div>
       <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForLastPage" data-pagechange="-1">이전 </button>
@@ -133,7 +133,7 @@
           <th scope="col">긍정, 부정</th>
         </tr>
       </thead>
-      <tbody id="newsChartTbody">
+      <tbody id="newsChartTbody" class="text-center">
           <td colspan="100%"><h3>waiting..</h3></td>
       </tbody>
     </table>
