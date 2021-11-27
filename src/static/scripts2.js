@@ -160,7 +160,8 @@ const drawRankingChart = async (kind) => {
         options: {
             scales: {
                 y: {
-                    biginAtZero: true
+                    min: 0,
+                    max:100,
                 }
             },
             title: {
@@ -483,7 +484,6 @@ const drawLineChart6 = async dataArray => {
     let values_opinions = []
     let values_politics = []
     let n = 3 // 반올림 소수점
-    let indexes = [0,1,2,3,4,5,6]
 
     dataArray.forEach(elem => {
         dates.push(String(Object.keys(elem)).slice(5,10))
@@ -501,7 +501,7 @@ const drawLineChart6 = async dataArray => {
         label: "경제",
         borderColor: '#f5a91b',
         backgroundColor: '#f5a91b',
- //       yAxisID: 'y1',
+        hidden: true,
     }
 
     const dataForSocials = {
@@ -510,7 +510,7 @@ const drawLineChart6 = async dataArray => {
         label: "사회",
         borderColor: '#ebcf60',
         backgroundColor: '#ebcf60',
-   //     yAxisID: 'y2',
+        hidden: true,
     }
 
     const dataForLifes = {
@@ -519,7 +519,7 @@ const drawLineChart6 = async dataArray => {
         label: "생활문화",
         borderColor: '#5dc97a',
         backgroundColor: '#5dc97a',
-     //   yAxisID: 'y3',
+        hidden: true,
     }
 
     const dataForWorlds = {
@@ -528,7 +528,7 @@ const drawLineChart6 = async dataArray => {
         label: "세계",
         borderColor: '#337aa1',
         backgroundColor: '#337aa1',
-       // yAxisID: 'y4',
+        hidden: true,
     }
 
     const dataForOpinions = {
@@ -537,7 +537,7 @@ const drawLineChart6 = async dataArray => {
         label: "오피니언",
         borderColor: '#68328c',
         backgroundColor: '#68328c',
-//        yAxisID: 'y5',
+        hidden: true,
     }
 
     const dataForPolitics = {
@@ -546,7 +546,7 @@ const drawLineChart6 = async dataArray => {
         label: "정치",
         borderColor: '#b54326 ',
         backgroundColor: '#b54326 ',
-  //      yAxisID: 'y6',
+        hidden: true,
     }
 
     let month = parseInt(dates[0].slice(0,2))
@@ -619,9 +619,6 @@ const drawLineChart6 = async dataArray => {
             },
         },
         stacked: false,
-    })
-    indexes.forEach(value => {
-        lineChart6.hide(value)
     })
 }
 
