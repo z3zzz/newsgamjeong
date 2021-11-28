@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="scrollEffect.css">
+    <link rel="stylesheet" href="docSlider/docSlider.css">
+    <link rel="stylesheet" href="docSlider/scrollCue.css">
+    <script type="text/javascript" src="docSlider/docSlider.min.js"></script>
+    <script type="text/javascript" src="docSlider/scrollCue.min.js"></script>
+</head>
+<body>
+    <div class="docSlider">
+        <section class="one">
+            <div class="container">
+                <div class="parent" data-cue="fadeIn">
+                    <div class="child"></div>
+                </div>
+                <div class="parent" data-cue="fadeIn">
+                    <div class="child"></div>
+                </div>
+                <div class="parent" data-cue="fadeIn">
+                    <div class="child"></div>
+                </div>
+                <div class="parent" data-cue="fadeIn">
+                    <div class="child"></div>
+                </div>
+            </div>
+        </section>
+        <section class="two">
+            <div class="container">
+                <div class="parent" data-cue="fadeIn">
+                    <div class="child"></div>
+                </div>
+                <div class="parent" data-cue="fadeIn">
+                    <div class="child"></div>
+                </div>
+                <div class="parent" data-cue="fadeIn">
+                    <div class="child"></div>
+                </div>
+                <div class="parent" data-cue="fadeIn">
+                    <div class="child"></div>
+                </div>
+            </div>
+        </section>
+        <section class="two">
+            <div class="container">
+                <div class="parent" data-cue="slideInRight">
+                    <div class="child"></div>
+                </div>
+                <div class="parent" data-cue="slideInDown">
+                    <div class="child"></div>
+                </div>
+                <div class="parent" data-cue="slideInUp">
+                    <div class="child"></div>
+                </div>
+                <div class="parent" data-cue="slideInLeft">
+                    <div class="child"></div>
+                </div>
+            </div>
+        </section>
+        <section class="two">
+            <div class="container">
+                <div class="parent" data-cue="zoomIn">
+                    <div class="child"></div>
+                </div>
+                <div class="parent" data-cue="zoomOut">
+                    <div class="child"></div>
+                </div>
+                <div class="parent" data-cue="bounceIn">
+                    <div class="child"></div>
+                </div>
+                <div class="parent" data-cue="bounceInLeft">
+                    <div class="child"></div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+
+
+    <script>
+        scrollCue.init({docSlider:true});
+        docSlider.init();
+    </script>
+
+</body>
+</html>
