@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Comforter+Brush&family=Mukta&family=Raleway:wght@300&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Mukta', sans-serif;
+}
+
+.container {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    height: 100vh;
+
+}
+
+section {
+    height: 85vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+    font-size: 2rem;
+    scroll-snap-align: start;
+
+}
+
+.one {
+    background-color: #333;
+
+}
+.two {
+    background-color: deeppink;
+
+}
+.three {
+    background-color: forestgreen;
+}
+.four {
+    background-color: gold;
+}
