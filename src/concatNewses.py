@@ -108,11 +108,13 @@ pprint(date_total_keyword_total_company_specific("조선일보"))
 
 # 7
 def date_specific_keyword_specific_company_specific(date, keyword, company):
-    return data[date][keyword][company]
-
+    try:
+        return data[date][keyword][company]
+    except:
+        return []
 '''
 코드 테스트용
-pprint(date_specific_keyword_specific_company_specific("2021.11.16","경제","조선일보"))
+pprint(date_specific_keyword_specific_company_specific("2021.11.16","정치","한겨레21"))
 '''
 
 # 8
