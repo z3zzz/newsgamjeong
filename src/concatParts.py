@@ -164,8 +164,8 @@ def date_specific_keyword_specific_company_total(date, keyword):
 
 '''
 코드 테스트용
-'''
 pprint(date_specific_keyword_specific_company_total("2021.11.16", "경제"))
+'''
 
 # 4
 def date_specific_keyword_total_company_total(date):
@@ -332,7 +332,7 @@ def date_specific_keyword_specific_company_specific(date, keyword, company):
 
 '''
 코드 테스트용
-pprint(date_specific_keyword_specific_company_specific("2021.11.16","경제","조선일보"))
+pprint(date_specific_keyword_specific_company_specific("2021.11.16","정치","한겨레21"))
 '''
 
 # 8
