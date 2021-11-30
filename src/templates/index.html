@@ -3,21 +3,21 @@
 {% block contents %}
 
 <!--Category Select Section-->
-<div class="container-fluid">
-    <div class="mx-2 row justify-content-center">
-        <div class="col-md-3 mt-4 mx-1 text-center">
-           <label class="selectorLabel">&nbsp;날짜 &nbsp;</label>
+<div class="container-my">
+    <div class="mx-2 display-flex justify-content-space-around">
+        <div class="mt-4 mx-1 text-center">
+           <label class="selectorLabel">&nbsp;날짜&nbsp;&nbsp;</label>
             <select class="selectorForm text-center" id="selectDate">
               <option value="total">전체</option>
             </select>
         </div>
-        <div class="col-md-3 mt-4 mx-2 text-center">
+        <div class=" mt-4 mx-2 text-center">
             <label class="selectorLabel">&nbsp;키워드&nbsp;</label>
             <select class="selectorForm text-center" id="selectKeyword">
               <option value="total">전체</option>
             </select>
         </div>
-        <div class="col-md-3 mt-4 mx-1 text-center">
+        <div class=" mt-4 mx-1 text-center">
            <label class="selectorLabel">&nbsp;언론사&nbsp;</label>
             <select class="selectorForm text-center" id="selectCompany">
               <option value="total">전체</option>
@@ -71,7 +71,7 @@
 </div>
 
 <!--Line Graph-->
-<div class="container-fluid text-center margin-top-many">
+<div class="container-fluid text-center margin-top-many margin-bottom-many">
   <h3>일별 긍정, 부정 분석 결과</h3>
   <div>
       <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForLastMonth" data-monthChange="-1">저번 달</button>
@@ -85,11 +85,11 @@
 </div>
 
 <!--테스트용 Line Graph-->
-<div class="container-fluid text-center margin-top-many">
+<div class="text-center margin-top-many container-my">
     <h3>-테스트-</h3>
-    <div class="mx-2 row justify-content-center">
-        <div class="col-md-2 mt-4 mx-1 text-center">
-            <label>월</label>
+    <div class="mx-2 justify-content-space-around display-flex line-graph-box">
+        <div class="mt-4 text-center p-2">
+            <label class="line-graph-label">월</label>
             <select class="selectorForm text-center" id="selectTestMonth">
               <option value="1" selected="selected">&nbsp;1월&nbsp;</option>
               <option value="2">&nbsp;2월&nbsp;</option>
@@ -98,8 +98,8 @@
               <option value="5">&nbsp;5월&nbsp;</option>
             </select>
         </div>
-        <div class="col-md-2 mt-4 mx-1 text-center">
-            <label>버전</label>
+        <div class="mt-4 text-center p-2">
+            <label class="line-graph-label">버전</label>
             <select class="selectorForm text-center" id="selectTestVersion">
               <option value="1" selected="selected">&nbsp;1&nbsp;</option>
               <option value="2">&nbsp;2&nbsp;</option>
@@ -107,8 +107,8 @@
               <option value="4">&nbsp;4&nbsp;</option>
             </select>
         </div>
-        <div class="col-md-2 mt-4 mx-1 text-center">
-            <label>구간</label>
+        <div class="mt-4 text-center p-2">
+            <label class="line-graph-label">구간</label>
             <select class="selectorForm text-center" id="selectInterval">
               <option value="month" selected="selected">월 단위</option>
               <option value="year">전체 단위</option>
@@ -123,7 +123,7 @@
 </div>
 
 <!--News Chart-->
-<div class="container-fluid text-center margin-top-many-2 margin-bottom-many">
+<div class="container-fluid text-center margin-top-many-2 margin-bottom-many2">
   <h3>뉴스별 긍정, 부정 분석 결과</h3>
   <div>
       <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForLastPage" data-pagechange="-1">이전 </button>

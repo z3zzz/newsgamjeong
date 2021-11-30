@@ -1,14 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Comforter+Brush&family=Gugi&family=Mukta&family=Raleway:wght@300&family=Roboto:wght@300&display=swap');
 /*----my own customize css ---- */
+
+body {
+   background-color: #edfaf7;
+   font-family: 'Roboto', sans-serif;
+   color: rgba(0,0,0,0.9)
+}
+
 a {
     text-decoration: none;
     color: inherit;
 }
+
+.title {
+    font-family: 'Gugi', cursive;
+    display: inline-block;
+    color: rgba(255,255,255,.7);
+    font-size: 2em;
+
+}
+
+.title-sub {
+    display: inline-block;
+    margin-right: .3em;
+}
+
+.nav-title {
+    text-align: center;
+    color: rgba(255,255,255,.8);
+    margin-left: 4em;
+}
+
+@media only screen and (max-width: 1101px) {
+    .nav-title {
+        text-align: center;
+        color: rgba(255,255,255,.8);
+        margin: 0 auto;
+    }
+}
+
+
+.bg-navbar {
+    background-color: #82abed;
+    padding: 1.3em 0;
+    text-align: center;
+}
+
 .enter-newline {
     white-space: pre-wrap;
 }
 .nav-rightside {
     text-align: right;
 }
+
 .marginforjumbo {
     margin-top: 150px;
     margin-left: 70px;
@@ -25,6 +69,7 @@ a {
 .bg-whitepurple {
     background-color: #eed5f5;
 }
+
 .hover-active:hover {
     font-weight: bold; 
 }
@@ -39,11 +84,14 @@ a {
 .logo {
     height: 3rem
 }
+
 .selectorForm {
-    width: 130px;
+    display: inline-block;
+    padding: .2em 0;
+    width: 8em; 
     font-weight: bold;
-    background-color: #eed5f5;
-    font-size: 18px;
+    background-color: #5fc9b1;
+    font-size: 1.6em;
 }
 .selectorLabel {
     font-size: 20px;
@@ -56,6 +104,7 @@ a {
     max-width: 900px; 
     max-height: 400px;
 }
+
 .margin-top-many {
     margin-top: 130px;
 }
@@ -66,8 +115,13 @@ a {
     margin-top: 1500px;
 }
 .margin-bottom-many {
-    margin-bottom: 400px;
+    margin-bottom: 100px;
 }
+
+.margin-bottom-many2 {
+    margin-bottom: 60vh;
+}
+
 .news_chart {
     max-width: 1100px; 
     max-height: 600px;
@@ -88,36 +142,86 @@ a {
     color:darkkhaki !important;
     font-weight: bold !important;
 }
-.statistics_card {
-    background-color:lightgreen;
-    margin-top: 20px;
-}
+
 .error {
     color: red;
 }
 
+.container-nav {
+    padding: 0 .3em;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%
+}
+
+.navbar-div {
+    margin: 0 7em;
+}
+
+.nav-a {
+    font-size: 1.4em;
+}
+
 .container-my {
-    max-width: 1080px;
-    margin: 0 auto;
+    margin: 2em auto;
     padding: 0 1.5em;
+    max-width: 1280px;
 }
 .container-statistics-card {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    max-width: 1080px;
+    margin: 3em auto 1em auto;
 }
+
+.container-selector {
+    max-width: 1080px;
+    flex-wrap: wrap;
+    margin: 3em auto 1em auto;
+}
+
+.display-flex {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.text-align-right {
+    text-align: right;
+}
+
+.justify-content-space-around {
+    justify-content: space-around;
+}
+
+.line-graph-label {
+    font-size: 1.6em;
+    display: inline-block;
+    margin: .3em;
+}
+
+.line-graph-box {
+    padding: 0 15%;
+}
+
+
 .statistics-card {
     font-weight: bold;
     color: #333;
     text-align: center;
-    padding: 0 0.2em;
+    padding: 2.1em 1.1em;
+    min-width: 9em;
     border-radius: 50%;
-
+    background-color:lightgreen;
+    border: 1px solid lightgreen; 
+    margin: .3em 
 }
 .statistics-card-title {
     font-weight: bold;
-    font-size: 2em;
+    font-size: 1.4em;
 }
 .statistics-card-value {
-    font-size: 1.5em;
+    font-size: 2em;
 }
