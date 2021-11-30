@@ -1,8 +1,10 @@
 import pymongo
 from flask import Blueprint, jsonify, request
 import concatParts as cp
+import concatParts2 as cp2
 import concatNewses as cn
 import getSelectors as gs
+import getSelectors2 as gs2
 import getLineGraph as gl
 import getLineGraph6 as gl6
 import getInfections as gi
@@ -44,25 +46,25 @@ def statistics():
     if is_total["date"]:
         if is_total["keyword"]:
             if is_total["company"]:
-                return jsonify(cp.date_total_keyword_total_company_total())
+                return jsonify(cp2.date_total_keyword_total_company_total())
             else:
-                return jsonify(cp.date_total_keyword_total_company_specific(selected_company))
+                return jsonify(cp2.date_total_keyword_total_company_specific(selected_company))
         else:
             if is_total["company"]:
-                return jsonify(cp.date_total_keyword_specific_company_total(selected_keyword))
+                return jsonify(cp2.date_total_keyword_specific_company_total(selected_keyword))
             else:
-                return jsonify(cp.date_total_keyword_specific_company_specific(selected_keyword, selected_company))
+                return jsonify(cp2.date_total_keyword_specific_company_specific(selected_keyword, selected_company))
     else:
         if is_total["keyword"]:
             if is_total["company"]:
-                return jsonify(cp.date_specific_keyword_total_company_total(selected_date))
+                return jsonify(cp2.date_specific_keyword_total_company_total(selected_date))
             else:
-                return jsonify(cp.date_specific_keyword_total_company_specific(selected_date, selected_company))
+                return jsonify(cp2.date_specific_keyword_total_company_specific(selected_date, selected_company))
         else:
             if is_total["company"]:
-                return jsonify(cp.date_specific_keyword_specific_company_total(selected_date, selected_keyword))
+                return jsonify(cp2.date_specific_keyword_specific_company_total(selected_date, selected_keyword))
             else:
-                return jsonify(cp.date_specific_keyword_specific_company_specific(selected_date, selected_keyword, selected_company))
+                return jsonify(cp2.date_specific_keyword_specific_company_specific(selected_date, selected_keyword, selected_company))
 
 
 
@@ -99,11 +101,11 @@ def news_list():
 
 @apis.route('/api/selectors', methods=["GET"])
 def selectors():
-    selectors = gs.getSelectors()
+    selectors = gs2.getSelectors()
     result = {}
     for key in selectors.keys():
         temp = []
-        for selector in selectors[key].keys():
+        for selector, count in selectors[key]:
             temp.append(selector)
         result[key] = temp
     return jsonify(result)
@@ -121,11 +123,20 @@ def line_graph6():
 
     return jsonify(gl6.getLineGraph6Data(month, version))
 
+@apis.route('/api/line_graph6_year', methods=["GET"])
+def line_graph6_year():
+    version = int(request.args.get("version"))
+    return jsonify(gl6.getLineGraph6DataYear(version))
+
 @apis.route('/api/infections', methods=["GET"])
 def infections():
     month = int(request.args.get("month"))
 
     return jsonify(gi.getInfectionsData(month))
+
+@apis.route('/api/infections_year', methods=["GET"])
+def infections_year():
+    return jsonify(gi.getInfectionsDataYear())
 
 
 

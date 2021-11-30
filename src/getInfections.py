@@ -35,7 +35,18 @@ def getInfectionsData(request_month):
 
     return {"result": "success", "data": sorted(result)}
 
+
+def getInfectionsDataYear():
+    # 임시 최대 월 지정하였음. 11월까지 꺾은선데이터 다 오면 아래 코드 지울 것
+    max_month = 5
+    result = []
+    for c in col.find({}):
+        if int(c["Date"][5:7]) <= max_month:
+            result.append((c["Date"][:4]+"."+c["Date"][5:7]+"."+c["Date"][8:10], c["corona"]))
+
+    return {"result": "success", "data": sorted(result)}
+
 '''
 테스트용
-pprint(getInfectionsData(1))
+pprint(getInfectionsDataYear())
 '''

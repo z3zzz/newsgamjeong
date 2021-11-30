@@ -33,3 +33,8 @@ def getSelectors():
             selectors["company"][news_company] += 1
 
     return selectors
+
+'''
+테스트용
+pprint(getSelectors())
+'''
