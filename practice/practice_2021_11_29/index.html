@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Practice</title>
+    <meta name="description" content="This is news-emotion site"> 
+    <script type="text/javascript" src="scripts.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="htts://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="htts://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="main.js" defer></script>
+
+</head>
+<body>
+  <h1 class="bla d-none" id="cla" >Hello Hello</h1>
+  <div class="d-none">
+    <button type="button" id="holding">hold-This!</button>
+  </div>
+  <div class="container-fluid text-center margin-top-many-2 d-none" >
+    <h3>뉴스별 긍정, 부정 분석 결과</h3>
+    <div class="news_chart mx-auto mt-3">
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr class="bg-whitepurple">
+            <th scope="col">기사 입력 시간</th>
+            <th scope="col">언론사</th>
+            <th scope="col">기사 제목</th>
+            <th scope="col">긍정, 부정</th>
+          </tr>
+        </thead>
+        <tbody id="newsChartTbody">
+            <td colspan="100%"><h3>waiting..</h3></td>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <div class="grandparent d-none">
+    <div class="parent">
+      <div class="child"><span>OOOO</span></div>
+    </div>
+  </div>
+
+  <header class="main-header">
+    <nav class="nav main-nav">
+      <ul>
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="store.html">STORE</a></li>
+        <li><a href="index2.html">ABOUT</a></li>
+    </ul>
+    </nav>
+    <h1 class="title title-lg">Gamjeong-Gamjeong</h1>
+  </header>
+
+  <section class="content-section container">
+    <h2 class="section-header">About this project </h2>
+    <h3>1. Why this project</h3>
+    <img src="flower-graph.jpg" alt="flower-graph" class="flower-graph-image">
+    <p>프로젝트 아이디어 동기
+      NLP, 언어 데이터에 대한 관심
+      사회적 현에 대한 관심
+      감염자 수 대비 기사제목의 긍정/부정 감정 변화
+      정부 대책(거리두기 단계)에 따른 기사제목의 긍정/부정 감정 변화
+      질본의 발표내용에 따른 기사제목의 긍정/부정 감정 변화
+      문제를 해결하기 위한 특정 질문 명시
+      코로나 감염자 수의 변화가 뉴스 기사 제목에 미치는 영향은?
+      데이터를 통해 탐색하려는 문제를 구체적으로 작성
+      코로나 감염자 수와 뉴스 기사 감정 사이의 연관성을 수치화 할 수 있다.
+      언론사별/키워드별/날짜별 기사 제목의 긍정/부정/중립 비율을 시각화하여 볼 수 있다. </p>
+
+    <h3>2. How this project</h3>
+    <p> 사용하려는 데이터
+      네이버에 노출되는 전체 기사
+      코로나 확진자 수(http://ncov.mohw.go.kr/)
+      설명 : 기사 제목, 언론사, 링크, 확진자 수를 크롤링해서 사용
+      크롤링 대상 기간 : 2020.01.01.~ 현재
+      기술 스택
+      프론트엔드 : HTML, CSS, Javascript
+      백엔드 : Django, Flask
+      데이터 분석 : PyTorch, sklearn
+      DB : mongoDB
+      크롤링 : Selenium
+      사용된 라이브러리
+      공통 : numpy, matplotlib, pandas, pymongo, tqdm, re
+      프론트엔드 : chart.js, bootstrap, d3.js, pyLDAvis, wordcloud, konlpy
+      데이터 분석 :gluonnlp, seaborn, transformers, logging
+      크롤링 : requests, bs4, multiprocessing, platform
+      웹서비스에 대한 자세한 개요
+      사용자가 원하는 분류 별(일별, 키워드별, 언론사별)로 뉴스 기사 제목의 감정 분석 결과를 시각화(파이 그래프, 꺾은선 그래프, 표)하여 보여준다.  </p>
+  </section>
+
+  <footer class="main-footer">
+    <div class="container container-main-footer">
+      <h3 class="title">Gamjeong-Gamjeong</h3>
+      <ul class="nav footer-nav">
+        <li>
+          <a href="#" target="_blank"><img class="sns-logo" src="https://cdn.cdnlogo.com/logos/y/92/youtube.svg"></a>
+        </li>
+        <li>
+          <a target="_blan" href="#"><img class="sns-logo" src="https://cdn.cdnlogo.com/logos/f/23/facebook.svg"></a>
+        </li>
+        <li>
+          <a target="_blank" class="sns-logo" href="#"><img class="sns-logo" src="https://cdn.cdnlogo.com/logos/i/44/instagram-icon.svg"></a>
+        </li>
+      </ul>
+    </div>
+  </footer>
+
+
+
+</body>
+
+</html>

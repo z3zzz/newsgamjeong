@@ -1,0 +1,80 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.page-container {
+    height: 100vh;
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+}
+.page {
+    height: 90vh;
+    scroll-snap-align: end;  
+}
+.page-one {
+    background-color: darkkhaki;
+}
+.page-two {
+    background-color: darkolivegreen;
+}
+.page-three {
+    background-color: darksalmon;
+}
+.page-four {
+    background-color: dimgray;
+}
+
+.container {
+    width: 100%;
+    max-width:800px;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;    
+    margin: 0 auto;
+}
+
+.parent {
+    height: 300px;
+    width: 300px;
+    background-color: #9932cc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.child {
+    height: 50%;
+    width: 50%;
+    background-color: #8fdc8f;
+}
+
+
+/* fade animation */
+.fade-in {
+    opacity: 0;
+    transition: opacity 500ms ease-in;
+}
+
+.fade-in.appear {
+    opacity: 1;
+}
+.inverse {
+    background-color: black ;
+}
+
+.from-left {
+    transform: translateX(-50%);
+    transition: opacity 500ms ease-in, transform 500ms ease-in;
+    opacity: 0;
+}
+.from-right {
+    transform: translateX(50%);
+    transition: opacity 500ms ease-in, transform 500ms ease-in;
+    opacity: 0;
+}
+.from-left.appear, .from-right.appear {
+    transform: translateX(0);
+    opacity: 1;
+}
