@@ -50,3 +50,23 @@ def getLineGraph6Data(request_month, version):
 테스트용
 pprint(getLineGraph6Data(4, 4))
 '''
+
+def getLineGraph6DataYear(version):
+    result = []
+    col_name = f'graph{version}'
+    col = db.get_collection(col_name)
+
+    for c in col.find({}):
+        for date in c.keys():
+            if date == "_id":
+                continue
+            temp = {}
+            temp[date] = c[date]
+            result.append(temp)
+
+        return {"result": "success", "data": result}
+
+'''
+테스트용
+'''
+pprint(getLineGraph6DataYear(2))
