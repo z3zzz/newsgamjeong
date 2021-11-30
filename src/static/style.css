@@ -49,12 +49,12 @@ a {
     font-size: 20px;
 }
 .pie_chart {
-    height: 400px;
-    width: 400px;
+    max-height: 400px;
+    max-width: 400px;
 }
 .line_chart {
-    width: 900px; 
-    height: 400px;
+    max-width: 900px; 
+    max-height: 400px;
 }
 .margin-top-many {
     margin-top: 130px;
@@ -69,8 +69,12 @@ a {
     margin-bottom: 400px;
 }
 .news_chart {
-    width: 1100px; 
-    height: 600px;
+    max-width: 1100px; 
+    max-height: 600px;
+}
+.charts {
+    position: relative;
+    width: 90vw;
 }
 .newsPositive {
     color:cornflowerblue !important;
@@ -90,4 +94,30 @@ a {
 }
 .error {
     color: red;
+}
+
+.container-my {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 1.5em;
+}
+.container-statistics-card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.statistics-card {
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    padding: 0 0.2em;
+    border-radius: 50%;
+
+}
+.statistics-card-title {
+    font-weight: bold;
+    font-size: 2em;
+}
+.statistics-card-value {
+    font-size: 1.5em;
 }

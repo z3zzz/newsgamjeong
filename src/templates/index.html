@@ -27,31 +27,31 @@
 </div>
 
 <!--Statistics Card Section-->
-<div class="conatiner-fluid">
-  <div class="row mt-3 justify-content-center">
-    <div class="col-md-1 mx-4 shadow statistics_card text-center">
-      <h6 class="mt-2" style="font-weight: bold;">총 기사 수</h6>
-      <h4 id="statisticsCardTotal"></h4>
+<div class="conatiner-my">
+  <div class="container-statistics-card">
+    <div class="statistics-card">
+      <h6 class="statistics-card-title">총 기사 수</h6>
+      <h4 class="statistics-card-value"  id="statisticsCardTotal"></h4>
       <div class="spinner-grow  spinner-grow-sm text-dark temp-spinner mb-2" role="status"></div>
     </div>
-    <div class="col-md-1 mx-4 shadow statistics_card text-center">
-      <h6 class="mt-2" style="font-weight: bold;">긍정 비율</h6>
-      <h4 id="statisticsCardPositive"></h4>
+    <div class="statistics-card">
+      <h6 class="statistics-card-title">긍정 비율</h6>
+      <h4 class="statistics-card-value" id="statisticsCardPositive"></h4>
       <div class="spinner-grow  spinner-grow-sm text-dark temp-spinner mb-2" role="status"></div>
     </div>
-    <div class="col-md-1 mx-4 shadow statistics_card text-center">
-      <h6 class="mt-2" style="font-weight: bold;">부정 비율</h6>
-      <h4 id="statisticsCardNegative"></h4>
+    <div class="statistics-card">
+      <h6 class="statistics-card-title">부정 비율</h6>
+      <h4 class="statistics-card-value" id="statisticsCardNegative"></h4>
       <div class="spinner-grow  spinner-grow-sm text-dark temp-spinner mb-2" role="status"></div>
     </div>
-    <div class="col-md-1 mx-4 shadow statistics_card text-center">
-      <h6 class="mt-2" style="font-weight: bold;">중립 비율</h6>
-      <h4 id="statisticsCardNormal"></h4>
+    <div class="statistics-card">
+      <h6 class="statistics-card-title">중립 비율</h6>
+      <h4 class="statistics-card-value" id="statisticsCardNormal"></h4>
       <div class="spinner-grow  spinner-grow-sm text-dark temp-spinner mb-2" role="status"></div>
     </div>
-    <div class="col-md-1 mx-4 shadow statistics_card text-center">
-      <h6 class="mt-2" style="font-weight: bold;">확진자수</h6>
-      <h4 id="infectionsCount"></h4>
+    <div class="statistics-card">
+      <h6 class="statistics-card-title">확진자수</h6>
+      <h4 class="statistics-card-value" id="infectionsCount"></h4>
       <div class="spinner-grow spinner-grow-sm text-dark temp-spinner mb-2 " role="status"></div>
     </div>
   </div>
@@ -63,7 +63,7 @@
 <div class="container-fluid mt-5 text-center">
   <h3 id="rankingOrPieChartText">긍정-부정 분석 결과</h3>
   <h5 id="subtitleForRankingChart"></h5>
-  <div class="pie_chart mx-auto mt-3 row justify-content-center" id="divForPieChart">
+  <div class="pie_chart mx-auto mt-3 row justify-content-center charts" id="divForPieChart">
       <div class="col-md-6 text-center">
           <h2>waiting..</h2>
       </div>
@@ -77,7 +77,7 @@
       <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForLastMonth" data-monthChange="-1">저번 달</button>
       <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForNextMonth" data-monthChange="1">다음 달</button>
   </div>
-  <div class="line_chart mx-auto mt-3 row justify-content-center" id="divForLineChart">
+  <div class="line_chart mx-auto mt-3 row justify-content-center charts" id="divForLineChart">
     <div class="col-md-6 text-center">
       <h2>waiting..</h2>
     </div>
@@ -107,8 +107,15 @@
               <option value="4">&nbsp;4&nbsp;</option>
             </select>
         </div>
+        <div class="col-md-2 mt-4 mx-1 text-center">
+            <label>구간</label>
+            <select class="selectorForm text-center" id="selectInterval">
+              <option value="month" selected="selected">월 단위</option>
+              <option value="year">전체 단위</option>
+            </select>
+        </div>
     </div>
-    <div class="line_chart mx-auto mt-3 row justify-content-center" id="divForLineChart6">
+    <div class="line_chart mx-auto mt-3 row justify-content-center charts" id="divForLineChart6">
       <div class="col-md-6 text-center">
         <h2>waiting..</h2>
       </div>
