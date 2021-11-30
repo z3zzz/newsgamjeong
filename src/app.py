@@ -20,5 +20,8 @@ def suggest():
     elif request.method == "DELETE":
         return SuggestList().delete_list()
 
+@app.route('/test')
+def test():
+    return render_template("test.html")
 
 
