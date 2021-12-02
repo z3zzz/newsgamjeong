@@ -426,6 +426,7 @@ const changeMonthForLineChart = async e => {
     }
     document.querySelector('#divForLineChart').innerHTML = await createNewLineChart4Canvas()
     await drawLineChart4(response)
+    document.querySelector('#headlineForLineGraph').innerText = `${requestMonth}월의 일별 긍,부정 변화 추이`
 }
 
 const drawLineChart = async (month) => {
@@ -517,6 +518,10 @@ const drawLineChart = async (month) => {
 let currentMonth = -1
 let maxMonth = 11
 let company
+let company_all
+let previous_keyword
+let previous_date
+
 const getNewData = async () => {
     let date = elemForSelectingDate?.value
     let keyword = elemForSelectingKeyword?.value
@@ -560,7 +565,36 @@ const getNewData = async () => {
     await changeNewsChartContent(reqData)
     document.querySelector('#footer').innerHTML = await makeFooterDiv()
 
+    if (keyword !== "total" && keyword !== previous_keyword) await updateCompanySelectors(date, keyword)
+
+    if (keyword === "total" && keyword !== previous_keyword) await updateCompanySelectors(date, keyword)
+
+    previous_date = date
+    previous_keyword = keyword
+
 }
+
+const updateCompanySelectors = async (date, keyword) => {
+    let companies = await getJsonFromApi('update_selectors?', {date, keyword})
+    elemForSelectingCompany.innerHTML = ""
+
+    let first_option = document.createElement('option')
+    first_option.innerText = "전체"
+    first_option.value = "total"
+    elemForSelectingCompany.append(first_option)
+
+    companies.sort().forEach(company => {
+        let option = document.createElement('option')
+        option.innerText = company
+        elemForSelectingCompany.append(option)
+    })
+
+    if (elemForSelectingCompany.childElementCount === 1) {
+        elemForSelectingCompany.firstElementChild.innerText = "언론사 없음 :("
+    }
+
+}
+
 
 const makeFooterDiv = async () => {
     return `
@@ -597,6 +631,7 @@ const makeLineChart4 = async (request_month) => {
     if (response.result !== "fail") {
         divForLineChart4.innerHTML = await createNewLineChart4Canvas()
         await drawLineChart4(response)
+        document.querySelector('#headlineForLineGraph').innerText = `${requestMonth}월의 일별 긍,부정 변화 추이`
     }
 
     if (response.result === "fail" ) {
@@ -762,7 +797,10 @@ const makeLineChart4Year = async () => {
     let n = 3 // 반올림 소수점
 
     lineDataRaw.forEach(elem => {
-        dates.push(String(elem["date"]).slice(5,10))
+        sliced_month = String(elem["date"]).slice(5,7)
+        if (sliced_month !== "12") {
+            dates.push(String(elem["date"]).slice(5,10))
+        }
         values_economics.push(parseFloat(elem["economics"]).toFixed(n))
         values_socials.push(parseFloat(elem["social"]).toFixed(n))
         values_lifes.push(parseFloat(elem["life"]).toFixed(n))
@@ -880,6 +918,7 @@ const makeLineChart4Year = async () => {
         stacked: false,
     })
     document.querySelector('#selectInterval').value = "year"
+    document.querySelector('#headlineForLineGraph').innerText = "2021년 1월~11월 간의 긍, 부정 변화 추이"
 }
 
 addEventToId("change","selectTestMonth", makeLineChart4)

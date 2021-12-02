@@ -100,6 +100,22 @@ def selectors():
     result["_id"] = 0
     return jsonify(result)
 
+@apis.route('/api/update_selectors', methods=["GET"])
+def update_selectors():
+    selected_date = request.args.get("date")
+    selected_keyword = request.args.get("keyword")
+
+    minimum_criteria = 1
+
+    result = []
+    for c in col_statistics.find({"date": selected_date, "keyword": selected_keyword, "company": {"$ne":"total"}}):
+        if c["total"] <  minimum_criteria:
+            continue
+        result.append(c["company"])
+
+    return jsonify(result)
+
+
 @apis.route('/api/line_graph', methods=["GET"])
 def line_graph():
     month_str = request.args.get("month")
