@@ -1,14 +1,15 @@
 from flask import Flask, render_template, request
-#from models import SuggestList
-#from apis import apis
+from models import SuggestList
+from apis import apis
 
 app = Flask(__name__)
-#app.register_blueprint(apis)
+app.debug = True
+app.register_blueprint(apis)
 
 @app.route("/")
 def home():
-    #return render_template("index.html")
-    return "it works!"
+    return render_template("index.html")
+
 
 @app.route("/suggest", methods=["POST", "GET", "PATCH", "DELETE"])
 def suggest():

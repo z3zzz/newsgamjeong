@@ -8,7 +8,7 @@ let elemForSelectingDate = document.querySelector('#selectDate')
 let elemForSelectingKeyword = document.querySelector('#selectKeyword')
 let elemForSelectingCompany = document.querySelector('#selectCompany')
 
-const apiOrigin = "https://gamjeong.tk/api/"
+const apiOrigin = "https://newsgamjeong.tk/api/"
 const getJsonFromApi = async (apiPathname, reqData) => {
     let res = await fetch(apiOrigin + apiPathname + new URLSearchParams(reqData))
     let responseJson = await res.json()
@@ -20,19 +20,19 @@ const getSelectors = async () => {
     let res = await fetch('/api/selectors')
     selectors = await res.json()
 
-    selectors.date.forEach(selector => {
+    selectors.dates.forEach(selector => {
         let option = document.createElement('option')
         option.innerText = selector
         elemForSelectingDate?.append(option)
     })
 
-    selectors.category.forEach(selector => {
+    selectors.keywords.forEach(selector => {
         let option = document.createElement('option')
         option.innerText = selector
         elemForSelectingKeyword?.append(option)
     })
 
-    selectors.company.forEach(selector => {
+    selectors.text_companies.forEach(selector => {
         let option = document.createElement('option')
         option.innerText = selector
         elemForSelectingCompany?.append(option)
@@ -432,7 +432,7 @@ const drawLineChart = async (month) => {
     }
     let dates = []
     let values = []
-    response.data.forEach(elem => {
+    response.forEach(elem => {
         dates.push(String(Object.keys(elem)).slice(5,10))
         values.push(parseInt(Object.values(elem)))
     })
@@ -450,9 +450,9 @@ const drawLineChart = async (month) => {
     let dates_infections = []
     let values_infections = []
 
-    response_infections.data.forEach(elem => {
-        dates_infections.push(String(elem[0]).slice(5,10))
-        values_infections.push(parseInt(elem[1].replace(/,/g,'')))
+    response_infections.forEach(elem => {
+        dates_infections.push(String(elem.date).slice(5,10))
+        values_infections.push(parseInt(elem.corona.replace(/,/g,'')))
     })
     const dataForInfections = {
         type: 'bar',
@@ -510,7 +510,7 @@ const drawLineChart = async (month) => {
 }
 
 let currentMonth = -1
-let maxMonth = 5
+let maxMonth = 11
 let company
 const getNewData = async () => {
     let date = elemForSelectingDate?.value
@@ -537,13 +537,13 @@ const getNewData = async () => {
 
     if (requestMonth <= maxMonth && requestMonth !== currentMonth ) {
         document.querySelector('#divForLineChart').innerHTML = await createLineChartCanvas()
-        await drawLineChart(requestMonth)
+        await makeLineChart4(requestMonth)
     }
 
     if (requestMonth > maxMonth && currentMonth !== maxMonth){
         //alert("해당 월의 데이터는 없습니다. 가장 가까운 월로 보여드릴게요")
         document.querySelector('#divForLineChart').innerHTML = await createLineChartCanvas()
-        await drawLineChart(maxMonth)
+        await makeLineChart4(maxMonth)
     }
 
     await changeNewsChartContent(reqData)
@@ -575,8 +575,7 @@ const makeFooterDiv = async () => {
 
 // 꺾은선 4가지 버전 테스트용
 
-const makeLineChart6 = async () => {
-    let requestVersion = document.querySelector('#selectTestVersion').value
+const makeLineChart4 = async (request_month) => {
     let requestMonth = document.querySelector('#selectTestMonth').value
     let requestInterval = document.querySelector('#selectInterval').value
     let divForLineChart6 = document.querySelector('#divForLineChart6')
@@ -586,7 +585,7 @@ const makeLineChart6 = async () => {
         return
     }
 
-    let response = await getJsonFromApi('line_graph6?', {month: requestMonth, version: requestVersion})
+    let response = await getJsonFromApi('line_graph?', {month: requestMonth})
 
     if (response.result === "success") {
         divForLineChart6.innerHTML = await createNewLineChart6Canvas()
@@ -762,7 +761,7 @@ const makeLineChart6Year = async () => {
         return
     }
 
-    let lineDataRaw = await getJsonFromApi('line_graph6_year?', {version})
+    let lineDataRaw = await getJsonFromApi('line_graph_year?', {version})
     let infectionsDataTemp = await fetch('/api/infections_year')
     let infectionsDataRaw = await infectionsDataTemp.json()
 
