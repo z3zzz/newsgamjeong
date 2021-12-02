@@ -1,38 +1,25 @@
 import pymongo
 from flask import Blueprint, jsonify, request
-import concatParts as cp
-import concatParts2 as cp2
-import concatNewses as cn
-import getSelectors as gs
-import getSelectors2 as gs2
-import getLineGraph as gl
-import getLineGraph6 as gl6
-import getInfections as gi
 
 apis = Blueprint(__name__, 'apis')
 
-def is_total_selected(selected_date, selected_keyword, selected_company):
+db_name = 'final_data'
+col_name_selectors = 'selectors'
+col_name_statistics = 'statistics'
+col_name_ifections = 'infection'
+col_name_rankings = 'rankings'
+col_name_line_graph = 'line_graph'
+col_name_newses = 'newses'
 
-    if selected_date == "total":
-        is_date_total = True
-    else:
-        is_date_total = False
+connection = pymongo.MongoClient("mongodb://localhost:27017/")
+db = connection.get_database(db_name)
 
-    if selected_keyword == "total":
-        is_keyword_total = True
-    else:
-        is_keyword_total = False
-
-    if selected_company == "total":
-        is_company_total = True
-    else:
-        is_company_total = False
-
-    return {
-        "date": is_date_total,
-        "keyword": is_keyword_total,
-        "company": is_company_total
-    }
+col_selectors = db.get_collection(col_name_selelectors)
+col_statistics = db.get_collection(col_name_statistics)
+col_infections = db.get_collection(col_name_infections)
+col_rankings = db.get_collection(col_name_rankings)
+col_line_graph = db.get_collection(col_name_line_graph)
+col_newses = db.get_collection(col_name_newses)
 
 
 @apis.route('/api/statistics', methods=["GET"])
@@ -41,31 +28,27 @@ def statistics():
     selected_keyword = request.args.get("keyword")
     selected_company = request.args.get("company")
 
-    is_total = is_total_selected(selected_date, selected_keyword, selected_company)
+    data1 = col_statistics.find_one({"date":selected_date, "keyword":selected_keyword, "company":selected_company})
 
-    if is_total["date"]:
-        if is_total["keyword"]:
-            if is_total["company"]:
-                return jsonify(cp2.date_total_keyword_total_company_total())
-            else:
-                return jsonify(cp2.date_total_keyword_total_company_specific(selected_company))
-        else:
-            if is_total["company"]:
-                return jsonify(cp2.date_total_keyword_specific_company_total(selected_keyword))
-            else:
-                return jsonify(cp2.date_total_keyword_specific_company_specific(selected_keyword, selected_company))
-    else:
-        if is_total["keyword"]:
-            if is_total["company"]:
-                return jsonify(cp2.date_specific_keyword_total_company_total(selected_date))
-            else:
-                return jsonify(cp2.date_specific_keyword_total_company_specific(selected_date, selected_company))
-        else:
-            if is_total["company"]:
-                return jsonify(cp2.date_specific_keyword_specific_company_total(selected_date, selected_keyword))
-            else:
-                return jsonify(cp2.date_specific_keyword_specific_company_specific(selected_date, selected_keyword, selected_company))
+    data2 = col_infections.find_one({"date":selected_data})
 
+    result1 = {
+        "total": data1["total"],
+        "positive": data1["positive"],
+        "negative": data1["negative"],
+        "normal": data1["normal"],
+        "infections": data2["corona"]
+    }
+
+    if selected_company != "total"
+        return jsonify(result1)
+
+    result2 = col_rankings.find_one({"date":selected_date, "keyword":selected_keyword, "company":"total"})
+
+    return jsonify({
+        "statistics": result1,
+        "news_ranking": result2,
+    })
 
 
 @apis.route('/api/newses', methods=["GET"])
@@ -74,47 +57,24 @@ def news_list():
     selected_keyword = request.args.get("keyword")
     selected_company = request.args.get("company")
 
-    is_total = is_total_selected(selected_date, selected_keyword, selected_company)
 
-    if is_total["date"]:
-        if is_total["keyword"]:
-            if is_total["company"]:
-                return jsonify(cn.date_total_keyword_total_company_total())
-            else:
-                return jsonify(cn.date_total_keyword_total_company_specific(selected_company))
-        else:
-            if is_total["company"]:
-                return jsonify(cn.date_total_keyword_specific_company_total(selected_keyword))
-            else:
-                return jsonify(cn.date_total_keyword_specific_company_specific(selected_keyword, selected_company))
-    else:
-        if is_total["keyword"]:
-            if is_total["company"]:
-                return jsonify(cn.date_specific_keyword_total_company_total(selected_date))
-            else:
-                return jsonify(cn.date_specific_keyword_total_company_specific(selected_date, selected_company))
-        else:
-            if is_total["company"]:
-                return jsonify(cn.date_specific_keyword_specific_company_total(selected_date, selected_keyword))
-            else:
-                return jsonify(cn.date_specific_keyword_specific_company_specific(selected_date, selected_keyword, selected_company))
+    result = list(col_newses.find({"date":selected_date, "keyword":selected_keyword, "company":"total"}).limit(10000))
+
+    return jsonify(result)
+
 
 @apis.route('/api/selectors', methods=["GET"])
 def selectors():
-    selectors = gs2.getSelectors()
-    result = {}
-    for key in selectors.keys():
-        temp = []
-        for selector, count in selectors[key]:
-            temp.append(selector)
-        result[key] = temp
-    return jsonify(result)
+
+    return jsonify(col_selectors.find_one({}))
 
 @apis.route('/api/line_graph', methods=["GET"])
 def line_graph():
-    month = int(request.args.get("month"))
+    month_str = request.args.get("month")
+    if len(month_str) == 1:
+        month_str = '0' + month_str
 
-    return jsonify(gl.getLineGraphData(month))
+    return jsonify(list(col_line_graph.fin
 
 @apis.route('/api/line_graph6', methods=["GET"])
 def line_graph6():
