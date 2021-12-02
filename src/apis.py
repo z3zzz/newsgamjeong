@@ -74,29 +74,23 @@ def line_graph():
     if len(month_str) == 1:
         month_str = '0' + month_str
 
-    return jsonify(list(col_line_graph.fin
+    return jsonify(list(col_line_graph.find({month: month_str})))
 
-@apis.route('/api/line_graph6', methods=["GET"])
-def line_graph6():
-    month = int(request.args.get("month"))
-    version = int(request.args.get("version"))
-
-    return jsonify(gl6.getLineGraph6Data(month, version))
-
-@apis.route('/api/line_graph6_year', methods=["GET"])
-def line_graph6_year():
-    version = int(request.args.get("version"))
-    return jsonify(gl6.getLineGraph6DataYear(version))
+@apis.route('/api/line_graph_year', methods=["GET"])
+def line_graph_year():
+    return jsonify(list(col_line_graph.find({})))
 
 @apis.route('/api/infections', methods=["GET"])
 def infections():
-    month = int(request.args.get("month"))
+    month_str = request.args.get("month")
+    if len(month_str) == 1:
+        month_str = '0' + month_str
 
-    return jsonify(gi.getInfectionsData(month))
+    return jsonify(list(col_infections.find({month: month_str})))
 
 @apis.route('/api/infections_year', methods=["GET"])
 def infections_year():
-    return jsonify(gi.getInfectionsDataYear())
+    return jsonify(list(col_infections.find({})))
 
 
 
