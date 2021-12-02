@@ -7,6 +7,11 @@ body {
    color: rgba(0,0,0,0.9)
 }
 
+path {
+   fill: #edfaf7 !important;
+}
+
+
 a {
     text-decoration: none;
     color: inherit;
@@ -37,6 +42,24 @@ a {
         color: rgba(255,255,255,.8);
         margin: 0 auto;
     }
+}
+
+.anychart-tooltip {
+    border-radius: 23px;
+    background: rgba(255, 255, 255, 1) !important;
+    font-family: Courier, Helvetica, Arial, 'sans-serif';
+    color: black;
+}
+
+.anychart-tooltip-separator {
+    height: 3px !important;
+    background: rgba(255, 255, 255, 1) !important;
+    color: black !important;
+}
+
+.anychart-tooltip-title{
+    font-size: 28px !important;
+    color: black !important;
 }
 
 
@@ -115,7 +138,17 @@ a {
     margin-top: 1500px;
 }
 .margin-bottom-many {
-    margin-bottom: 100px;
+    margin-bottom: 20vh;
+}
+
+.anychart-credits {
+   display: none;
+}
+
+.word-cloud {
+    height: 500px;
+    max-width: 900px  ;
+    margin: 5em auto 5em auto;
 }
 
 .margin-bottom-many2 {

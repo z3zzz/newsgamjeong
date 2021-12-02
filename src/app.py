@@ -11,6 +11,7 @@ def home():
     return render_template("index.html")
 
 
+
 @app.route("/suggest", methods=["POST", "GET", "PATCH", "DELETE"])
 def suggest():
     if request.method == "POST":

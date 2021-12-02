@@ -60,7 +60,7 @@
 
 
 <!--Pie Graph--> <!--Ranking Chart-->
-<div class="container-fluid mt-5 text-center">
+<div class="container-fluid mt-5 text-center margin-bottom-many">
   <h3 id="rankingOrPieChartText">긍정-부정 분석 결과</h3>
   <h5 id="subtitleForRankingChart"></h5>
   <div class="pie_chart mx-auto mt-3 row justify-content-center charts" id="divForPieChart">
@@ -73,7 +73,7 @@
 
 <!--pyLDAvis-->
 
-<div class="container-fluid mt-5 text-center">
+<div class="container-fluid mt-5 text-center margin-bottom-many">
   <h3 id="">토픽모델링 결과</h3>
   <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForLastMonthLda" data-monthChange="-1">저번 달</button>
   <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForNextMonthLda" data-monthChange="1">다음 달</button>
@@ -87,7 +87,7 @@
 
 
 <!--Line Graph-->
-<div class="text-center margin-top-many container-my">
+<div class="text-center margin-top-many container-my margin-bottom-many">
     <h3>일별 긍정, 부정 분석 결과</h3>
     <div class="mx-2 justify-content-center display-flex line-graph-box">
         <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForLastMonthLine" data-monthChange="-1">저번 달</button>
@@ -109,12 +109,46 @@
 
 <!--WordCloud-->
 
-<div class="container-fluid mt-5 text-center">
-  <h3 id="">워드클라우드 결과</h3>
-  <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForLastMonthWordCloud" data-monthChange="-1">저번 달</button>
-  <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForNextMonthWordCloud" data-monthChange="1">다음 달</button>
-  <div class="word-cloud mx-auto mt-3 row justify-content-center charts" id="divForWordCloud">
-      <div class="col-md-6 text-center">
+<div class="container-fluid mt-5 text-center margin-bottom-many">
+  <h3 id="">기사본문 워드클라우드 결과</h3>
+  <div class="mx-2 display-flex justify-content-center">
+    <div class="mt-4 mx-1 text-center">
+       <label class="selectorLabel">&nbsp;&nbsp;월&nbsp;&nbsp;</label>
+        <select class="selectorForm text-center" id="selectDateWordCloud">
+          <option value="total">전체</option>
+          <option value="1">1월</option>
+          <option value="2">2월</option>
+          <option value="3">3월</option>
+          <option value="4">4월</option>
+          <option value="5">5월</option>
+          <option value="6">6월</option>
+          <option value="7">7월</option>
+          <option value="8">8월</option>
+          <option value="9">9월</option>
+          <option value="10">10월</option>
+          <option value="11" selected>11월</option>
+        </select>
+    </div>
+    <div class=" mt-4 mx-2 text-center">
+        <label class="selectorLabel">&nbsp;키워드&nbsp;</label>
+        <select class="selectorForm text-center" id="selectKeywordWordCloud">
+          <option value="total">전체</option>
+          <option value="it">IT</option>
+          <option value="education">교육</option>
+          <option value="election">대선</option>
+          <option value="vaccine">백신</option>
+          <option value="realEstate">부동산</option>
+          <option value="capital">수도권</option>
+          <option value="trip">여행</option>
+          <option value="store">자영업</option>
+          <option value="stock">주식</option>
+          <option value="environment">친환경</option>
+          <option value="corona">코로나</option>
+        </select>
+    </div>
+  </div>
+  <div class="word-cloud" id="divForWordCloud">
+      <div class="mx-auto text-center">
           <h2>waiting..</h2>
       </div>
   </div>

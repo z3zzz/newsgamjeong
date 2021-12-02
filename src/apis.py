@@ -10,6 +10,7 @@ col_name_infections = 'infections'
 col_name_rankings = 'rankings'
 col_name_line_graph = 'line_graph'
 col_name_newses = 'newses'
+col_name_wordcloud = 'wordcloud'
 
 connection = pymongo.MongoClient("mongodb://localhost:27017/")
 db = connection.get_database(db_name)
@@ -20,6 +21,7 @@ col_infections = db.get_collection(col_name_infections)
 col_rankings = db.get_collection(col_name_rankings)
 col_line_graph = db.get_collection(col_name_line_graph)
 col_newses = db.get_collection(col_name_newses)
+col_wordcloud = db.get_collection(col_name_wordcloud)
 
 def parse_json(data):
     return json.loads(json_util.dumps(data))
@@ -127,4 +129,9 @@ def infections_year():
     return jsonify(list(col_infections.find({})))
 
 
+@apis.route('/api/wordcloud', methods=["GET"])
+def wordcloud():
+    month = request.args.get("month")
+    keyword = request.args.get("keyword")
 
+    return jsonify(col_wordcloud.find_one({"month": month, "keyword": keyword}, {"_id":0}))

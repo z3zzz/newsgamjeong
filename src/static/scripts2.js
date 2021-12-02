@@ -217,7 +217,7 @@ const drawRankingChart = async (kind) => {
     })
     document.querySelector('#selectRankingKind').value = kind
     addEventToId("change", "selectRankingKind", makeNewRankingChart)
-    textSpaceForPie.innerText = `${responseData.news_ranking.number_of_companies}개 언론사들 중 긍정, 부정, 중립 비율 랭킹`
+    textSpaceForPie.innerText = `${Object.keys(responseData.news_ranking.number_of_newses).length}개 언론사들 중 긍정, 부정, 중립 비율 랭킹`
     textSpaceForRanking.innerText = `(최소 기사 개수 기준: ${responseData.news_ranking.criteria}개 )`
 }
 
@@ -543,12 +543,16 @@ const getNewData = async () => {
     if (requestMonth <= maxMonth && requestMonth !== currentMonth ) {
         document.querySelector('#divForLineChart').innerHTML = await createLineChartCanvas()
         await makeLineChart4(requestMonth)
+
+        makeWordCloud(requestMonth)
     }
 
     if (requestMonth > maxMonth && currentMonth !== maxMonth){
         //alert("해당 월의 데이터는 없습니다. 가장 가까운 월로 보여드릴게요")
         document.querySelector('#divForLineChart').innerHTML = await createLineChartCanvas()
         await makeLineChart4(maxMonth)
+
+        makeWordCloud(maxMonth)
     }
 
     await changeNewsChartContent(reqData)
