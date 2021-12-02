@@ -36,3 +36,22 @@ const makeWordCloud = async (reqMonthOrEvent) => {
 
 addEventToId('change', 'selectDateWordCloud', makeWordCloud)
 addEventToId('change', 'selectKeywordWordCloud', makeWordCloud)
+
+
+const makePyLdaChart = async (reqMonthOrEvent) => {
+    let month
+    if (reqMonthOrEvent.target != null) {
+        month = document.querySelector('#selectDatePyLda').value
+    } else {
+        month = reqMonthOrEvent
+        document.querySelector('#selectDatePyLda').value = month
+    }
+
+    let datas = await getJsonFromApi('lda?',{month})
+
+    document.querySelector('#divForPyLda').innerHTML = ""
+    new LDAvis("#divForPyLda", datas.data);
+
+}
+
+addEventToId('change', 'selectDatePyLda', makePyLdaChart)

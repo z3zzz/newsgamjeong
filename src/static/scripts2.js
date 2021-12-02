@@ -545,6 +545,7 @@ const getNewData = async () => {
         await makeLineChart4(requestMonth)
 
         makeWordCloud(requestMonth)
+        makePyLdaChart(requestMonth)
     }
 
     if (requestMonth > maxMonth && currentMonth !== maxMonth){
@@ -553,6 +554,7 @@ const getNewData = async () => {
         await makeLineChart4(maxMonth)
 
         makeWordCloud(maxMonth)
+        makePyLdaChart(maxMonth)
     }
 
     await changeNewsChartContent(reqData)

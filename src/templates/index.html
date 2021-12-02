@@ -74,16 +74,31 @@
 <!--pyLDAvis-->
 
 <div class="container-fluid mt-5 text-center margin-bottom-many">
-  <h3 id="">토픽모델링 결과</h3>
-  <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForLastMonthLda" data-monthChange="-1">저번 달</button>
-  <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForNextMonthLda" data-monthChange="1">다음 달</button>
+  <h3 id="">기사본문 토픽모델링 결과</h3>
+  <div class="mx-2 display-flex justify-content-center">
+    <div class="mt-4 mx-1 text-center">
+       <label class="selectorLabel">&nbsp;&nbsp;월&nbsp;&nbsp;</label>
+        <select class="selectorForm text-center" id="selectDatePyLda">
+          <option value="1">1월</option>
+          <option value="2">2월</option>
+          <option value="3">3월</option>
+          <option value="4">4월</option>
+          <option value="5">5월</option>
+          <option value="6">6월</option>
+          <option value="7">7월</option>
+          <option value="8">8월</option>
+          <option value="9">9월</option>
+          <option value="10">10월</option>
+          <option value="11" selected>11월</option>
+        </select>
+    </div>
+  </div>
   <div class="lda_chart mx-auto mt-3 row justify-content-center charts" id="divForPyLda">
       <div class="col-md-6 text-center">
           <h2>waiting..</h2>
       </div>
   </div>
 </div>
-
 
 
 <!--Line Graph-->
