@@ -260,11 +260,11 @@ const changeNewsChartContent = async reqData => {
         let a = document.createElement('a')
         let td4 = document.createElement('td')
 
-        td1.innerText = elem.timestring
-        td2.innerText = elem.company
+        td1.innerText = elem.time
+        td2.innerText = elem.text_company
         td2.width = "12%"
-        a.href = elem.link
-        a.innerText = elem.title
+        a.href = elem.context_url
+        a.innerText = elem.text_headline
         td3.append(a)
         td3.width = "60%"
 
@@ -364,11 +364,11 @@ const changePageForNewses = () => {
         let a = document.createElement('a')
         let td4 = document.createElement('td')
 
-        td1.innerText = elem.timestring
-        td2.innerText = elem.company
+        td1.innerText = elem.time
+        td2.innerText = elem.text_company
         td2.width = "12%"
-        a.href = elem.link
-        a.innerText = elem.title
+        a.href = elem.context_url
+        a.innerText = elem.text_headline
         td3.append(a)
         td3.width = "60%"
 
@@ -805,7 +805,7 @@ const makeLineChart4Year = async () => {
     infectionsDataRaw.forEach(elem => {
         values_infections.push(parseInt(elem["corona"].replace(/,/g,'')))
     })
-    console.log(values_infections)
+    //console.log(values_infections)
     const dataForInfections = {
         type: 'bar',
         data: values_infections,

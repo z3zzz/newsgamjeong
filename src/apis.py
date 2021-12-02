@@ -60,8 +60,31 @@ def news_list():
     selected_keyword = request.args.get("keyword")
     selected_company = request.args.get("company")
 
+    query_arr = []
+    if selected_date != "total":
+        query_arr.append({"date": selected_date})
+    if selected_keyword != "total":
+        query_arr.append({"category": selected_keyword})
+    if selected_company != "total":
+        query_arr.append({"text_company": selected_company })
 
-    result = list(col_newses.find({"date":selected_date, "keyword":selected_keyword, "company":"total"}).limit(10000))
+
+    limit = 10000
+    offset = 0
+
+    if selected_date == "total" and selected_keyword == "total" and selected_company == "total":
+        result = list(
+            col_newses.find({}, {"_id": 0})
+            .limit(limit)
+            .skip(offset)
+        )
+    else:
+        query = {"$and": query_arr}
+        result = list(
+            col_newses.find(query, {"_id": 0})
+            .limit(limit)
+            .skip(offset)
+        )
 
     return jsonify(result)
 
