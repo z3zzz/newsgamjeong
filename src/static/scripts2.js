@@ -914,6 +914,14 @@ const makeLineChart4Year = async () => {
                     display: false,
                 },
             },
+            elements: {
+                point: {
+                    radius: 0,
+                },
+                line: {
+                    borderWidth: 1,
+                },
+            },
         },
         stacked: false,
     })
