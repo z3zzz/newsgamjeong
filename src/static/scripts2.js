@@ -20,19 +20,19 @@ const getSelectors = async () => {
     let res = await fetch('/api/selectors')
     selectors = await res.json()
 
-    selectors.dates.forEach(selector => {
+    selectors.dates.sort().forEach(selector => {
         let option = document.createElement('option')
         option.innerText = selector
         elemForSelectingDate?.append(option)
     })
 
-    selectors.keywords.forEach(selector => {
+    selectors.keywords.sort().forEach(selector => {
         let option = document.createElement('option')
         option.innerText = selector
         elemForSelectingKeyword?.append(option)
     })
 
-    selectors.text_companies.forEach(selector => {
+    selectors.text_companies.sort().forEach(selector => {
         let option = document.createElement('option')
         option.innerText = selector
         elemForSelectingCompany?.append(option)
@@ -415,26 +415,31 @@ const createLineChartCanvas = async () => {
 
 const changeMonthForLineChart = async e => {
     let requestMonth = currentMonth + parseInt(e.target.dataset.monthchange)
-    let response = await getJsonFromApi('line_graph?',{month: requestMonth})
-    if (response.result === "fail") {
-        alert(response.reason + ". " )
+    if (requestMonth === 0) {
+        alert('2021년 1월부터 자료가 있습니다 :)')
         return
     }
-    document.querySelector('#divForLineChart').innerHTML = await createLineChartCanvas()
-    await drawLineChart(requestMonth)
+    let response = await getJsonFromApi('line_graph?',{month: requestMonth})
+    if (response.result === "fail") {
+        alert(`${response.reason}`)
+        return
+    }
+    document.querySelector('#divForLineChart').innerHTML = await createNewLineChart4Canvas()
+    await drawLineChart4(response)
 }
 
 const drawLineChart = async (month) => {
     let lineChartElem = document.getElementById('lineChart')
     let response = await getJsonFromApi('line_graph?',{month})
     if (response.result === "fail") {
+        alert(`${response.reason}`)
         return
     }
     let dates = []
     let values = []
     response.forEach(elem => {
-        dates.push(String(Object.keys(elem)).slice(5,10))
-        values.push(parseInt(Object.values(elem)))
+        dates.push(String(elem["date"]).slice(5,10))
+        values.push(parseInt(elem[""]))
     })
     const dataForLine = {
         type: 'line',
@@ -501,10 +506,10 @@ const drawLineChart = async (month) => {
         stacked: false,
     })
 
-    addEventToId("click", "buttonForLastMonth", changeMonthForLineChart)
-    addEventToId("click", "buttonForNextMonth", changeMonthForLineChart)
+    addEventToId("click", "buttonForLastMonthLine", changeMonthForLineChart)
+    addEventToId("click", "buttonForNextMonthLine", changeMonthForLineChart)
 
-    if (response.result === "success") {
+    if (response.result !== "fail") {
         currentMonth = month
     }
 }
@@ -532,7 +537,7 @@ const getNewData = async () => {
     if (date === "total") {
         requestMonth = maxMonth
     } else {
-        requestMonth = parseInt(date.slice(8,10))
+        requestMonth = parseInt(date.slice(5,7))
     }
 
     if (requestMonth <= maxMonth && requestMonth !== currentMonth ) {
@@ -572,50 +577,43 @@ const makeFooterDiv = async () => {
 }
 
 
-
-// 꺾은선 4가지 버전 테스트용
-
 const makeLineChart4 = async (request_month) => {
-    let requestMonth = document.querySelector('#selectTestMonth').value
     let requestInterval = document.querySelector('#selectInterval').value
-    let divForLineChart6 = document.querySelector('#divForLineChart6')
+    let divForLineChart4 = document.querySelector('#divForLineChart')
 
     if (requestInterval === "year") {
-        await makeLineChart6Year()
+        await makeLineChart4Year()
         return
     }
 
     let response = await getJsonFromApi('line_graph?', {month: requestMonth})
 
-    if (response.result === "success") {
-        divForLineChart6.innerHTML = await createNewLineChart6Canvas()
-        await drawLineChart6(response.data)
+    if (response.result !== "fail") {
+        divForLineChart4.innerHTML = await createNewLineChart4Canvas()
+        await drawLineChart4(response)
     }
-    if (response?.result !== "success" ) {
-        divForLineChart6.innerHTML = `<h2>해당 데이터는 없어요</h2>`
+
+    if (response.result === "fail" ) {
+        divForLineChart4.innerHTML = `<h2>해당 데이터는 없어요</h2>`
     }
 }
 
-const createNewLineChart6Canvas = async () => `<canvas id="lineChart6"></canvas>`
-const drawLineChart6 = async dataArray => {
-    let lineChartElem = document.getElementById('lineChart6')
+const createNewLineChart4Canvas = async () => `<canvas id="lineChart4"></canvas>`
+const drawLineChart4 = async dataArray => {
+    let lineChartElem = document.getElementById('lineChart4')
     let dates = []
     let values_economics = []
     let values_socials = []
     let values_lifes = []
-    let values_worlds = []
-    let values_opinions = []
     let values_politics = []
     let n = 3 // 반올림 소수점
 
     dataArray.forEach(elem => {
-        dates.push(String(Object.keys(elem)).slice(5,10))
-        values_economics.push(-parseFloat(Object.values(elem)[0]["경제"]).toFixed(n))
-        values_socials.push(-parseFloat(Object.values(elem)[0]["사회"]).toFixed(n))
-        values_lifes.push(-parseFloat(Object.values(elem)[0]["생활문화"]).toFixed(n))
-        values_worlds.push(-parseFloat(Object.values(elem)[0]["세계"]).toFixed(n))
-        values_opinions.push(-parseFloat(Object.values(elem)[0]["오피니언"]).toFixed(n))
-        values_politics.push(-parseFloat(Object.values(elem)[0]["정치"]).toFixed(n))
+        dates.push(String(elem["date"]).slice(5,10))
+        values_economics.push(parseFloat(elem["economics"]).toFixed(n))
+        values_socials.push(parseFloat(elem["social"]).toFixed(n))
+        values_lifes.push(parseFloat(elem["life"]).toFixed(n))
+        values_politics.push(parseFloat(elem["politics"]).toFixed(n))
     })
 
     const dataForEconomics = {
@@ -642,24 +640,6 @@ const drawLineChart6 = async dataArray => {
         label: "생활문화",
         borderColor: '#5dc97a',
         backgroundColor: '#5dc97a',
-        hidden: true,
-    }
-
-    const dataForWorlds = {
-        type: 'line',
-        data: values_worlds,
-        label: "세계",
-        borderColor: '#337aa1',
-        backgroundColor: '#337aa1',
-        hidden: true,
-    }
-
-    const dataForOpinions = {
-        type: 'line',
-        data: values_opinions,
-        label: "오피니언",
-        borderColor: '#68328c',
-        backgroundColor: '#68328c',
         hidden: true,
     }
 
@@ -676,8 +656,8 @@ const drawLineChart6 = async dataArray => {
     let response_infections = await getJsonFromApi('infections?', {month})
     let values_infections = []
 
-    response_infections.data.forEach(elem => {
-        values_infections.push(parseInt(elem[1].replace(/,/g,'')))
+    response_infections.forEach(elem => {
+        values_infections.push(parseInt(elem["corona"].replace(/,/g,'')))
     })
     const dataForInfections = {
         type: 'bar',
@@ -689,9 +669,9 @@ const drawLineChart6 = async dataArray => {
     }
 
 
-    const lineChart6 = new Chart(lineChartElem,{
+    const lineChart4 = new Chart(lineChartElem,{
         data: {
-            datasets: [dataForEconomics, dataForSocials, dataForLifes, dataForWorlds, dataForOpinions, dataForPolitics, dataForInfections],
+            datasets: [dataForEconomics, dataForSocials, dataForLifes, dataForPolitics, dataForInfections],
             labels: dates.sort()
         },
         options: {
@@ -723,19 +703,17 @@ const drawLineChart6 = async dataArray => {
                             "경제": 0,
                             "사회": 1,
                             "생활문화": 2,
-                            "세계": 3,
-                            "오피니언": 4,
-                            "정치": 5,
-                            "감염자수": 6,
+                            "정치": 3,
+                            "감염자수": 4,
                         }
 
                         let index = labelToDatasetIndex[legendItem.text]
-                        const currentVisibility = lineChart6.isDatasetVisible(index)
+                        const currentVisibility = lineChart4.isDatasetVisible(index)
 
                         if (currentVisibility === true) {
-                            lineChart6.hide(index)
+                            lineChart4.hide(index)
                         } else {
-                            lineChart6.show(index)
+                            lineChart4.show(index)
                         }
 
                     },
@@ -748,41 +726,41 @@ const drawLineChart6 = async dataArray => {
         stacked: false,
     })
     document.querySelector('#selectInterval').value = "month"
+    addEventToId("click", "buttonForLastMonthLine", changeMonthForLineChart)
+    addEventToId("click", "buttonForNextMonthLine", changeMonthForLineChart)
+    currentMonth = month
 }
 
 
 // 1년단위로 나오는 꺾은선막대그래프
-const makeLineChart6Year = async () => {
-    divForLineChart6.innerHTML = await createNewLineChart6Canvas()
+const makeLineChart4Year = async () => {
+    let divForLineChart4 = document.querySelector('#divForLineChart')
     let requestInterval = document.querySelector('#selectInterval').value
-    let version = document.querySelector('#selectTestVersion').value
     if (requestInterval === "month") {
-        await makeLineChart6()
+        await makeLineChart4()
         return
     }
 
-    let lineDataRaw = await getJsonFromApi('line_graph_year?', {version})
+    divForLineChart4.innerHTML = await createNewLineChart4Canvas()
+
+    let lineDataRaw = await getJsonFromApi('line_graph_year?', {})
     let infectionsDataTemp = await fetch('/api/infections_year')
     let infectionsDataRaw = await infectionsDataTemp.json()
 
-    let lineChartElem = document.getElementById('lineChart6')
+    let lineChartElem = document.getElementById('lineChart4')
     let dates = []
     let values_economics = []
     let values_socials = []
     let values_lifes = []
-    let values_worlds = []
-    let values_opinions = []
     let values_politics = []
     let n = 3 // 반올림 소수점
 
-    lineDataRaw.data.forEach(elem => {
-        dates.push(String(Object.keys(elem)).slice(5,10))
-        values_economics.push(-parseFloat(Object.values(elem)[0]["경제"]).toFixed(n))
-        values_socials.push(-parseFloat(Object.values(elem)[0]["사회"]).toFixed(n))
-        values_lifes.push(-parseFloat(Object.values(elem)[0]["생활문화"]).toFixed(n))
-        values_worlds.push(-parseFloat(Object.values(elem)[0]["세계"]).toFixed(n))
-        values_opinions.push(-parseFloat(Object.values(elem)[0]["오피니언"]).toFixed(n))
-        values_politics.push(-parseFloat(Object.values(elem)[0]["정치"]).toFixed(n))
+    lineDataRaw.forEach(elem => {
+        dates.push(String(elem["date"]).slice(5,10))
+        values_economics.push(parseFloat(elem["economics"]).toFixed(n))
+        values_socials.push(parseFloat(elem["social"]).toFixed(n))
+        values_lifes.push(parseFloat(elem["life"]).toFixed(n))
+        values_politics.push(parseFloat(elem["politics"]).toFixed(n))
     })
 
     const dataForEconomics = {
@@ -812,24 +790,6 @@ const makeLineChart6Year = async () => {
         hidden: true,
     }
 
-    const dataForWorlds = {
-        type: 'line',
-        data: values_worlds,
-        label: "세계",
-        borderColor: '#337aa1',
-        backgroundColor: '#337aa1',
-        hidden: true,
-    }
-
-    const dataForOpinions = {
-        type: 'line',
-        data: values_opinions,
-        label: "오피니언",
-        borderColor: '#68328c',
-        backgroundColor: '#68328c',
-        hidden: true,
-    }
-
     const dataForPolitics = {
         type: 'line',
         data: values_politics,
@@ -841,9 +801,11 @@ const makeLineChart6Year = async () => {
 
     let values_infections = []
 
-    infectionsDataRaw.data.forEach(elem => {
-        values_infections.push(parseInt(elem[1].replace(/,/g,'')))
+    //console.log(infectionsDataRaw)
+    infectionsDataRaw.forEach(elem => {
+        values_infections.push(parseInt(elem["corona"].replace(/,/g,'')))
     })
+    console.log(values_infections)
     const dataForInfections = {
         type: 'bar',
         data: values_infections,
@@ -854,9 +816,9 @@ const makeLineChart6Year = async () => {
     }
 
 
-    const lineChart6 = new Chart(lineChartElem,{
+    const lineChart4 = new Chart(lineChartElem,{
         data: {
-            datasets: [dataForEconomics, dataForSocials, dataForLifes, dataForWorlds, dataForOpinions, dataForPolitics, dataForInfections],
+            datasets: [dataForEconomics, dataForSocials, dataForLifes, dataForPolitics, dataForInfections],
             labels: dates.sort()
         },
         options: {
@@ -879,6 +841,7 @@ const makeLineChart6Year = async () => {
                         drawOnChartArea: false,
                     },
                     min: 200,
+                    max: 5500,
                 },
             },
             plugins: {
@@ -888,19 +851,17 @@ const makeLineChart6Year = async () => {
                             "경제": 0,
                             "사회": 1,
                             "생활문화": 2,
-                            "세계": 3,
-                            "오피니언": 4,
-                            "정치": 5,
-                            "감염자수": 6,
+                            "정치": 3,
+                            "감염자수": 4,
                         }
 
                         let index = labelToDatasetIndex[legendItem.text]
-                        const currentVisibility = lineChart6.isDatasetVisible(index)
+                        const currentVisibility = lineChart4.isDatasetVisible(index)
 
                         if (currentVisibility === true) {
-                            lineChart6.hide(index)
+                            lineChart4.hide(index)
                         } else {
-                            lineChart6.show(index)
+                            lineChart4.show(index)
                         }
 
                     },
@@ -915,17 +876,8 @@ const makeLineChart6Year = async () => {
     document.querySelector('#selectInterval').value = "year"
 }
 
-addEventToId("change","selectTestMonth", makeLineChart6)
-addEventToId("change","selectTestVersion", makeLineChart6)
-addEventToId("change","selectInterval", makeLineChart6Year)
-
-
-
-
-
-
-
-
+addEventToId("change","selectTestMonth", makeLineChart4)
+addEventToId("change","selectInterval", makeLineChart4Year)
 
 
 const deleteTempSpinners = async () => {
@@ -940,7 +892,6 @@ addEventToId("change", "selectCompany", getNewData)
 const getFirstData = async () => {
     await getSelectors()
     await getNewData()
-    await makeLineChart6() // 테스트용
 }
 
 if (location.pathname === "/") getFirstData()
