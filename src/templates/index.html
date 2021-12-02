@@ -70,43 +70,28 @@
   </div>
 </div>
 
-<!--Line Graph-->
-<div class="container-fluid text-center margin-top-many margin-bottom-many">
-  <h3>일별 긍정, 부정 분석 결과</h3>
-  <div>
-      <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForLastMonth" data-monthChange="-1">저번 달</button>
-      <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForNextMonth" data-monthChange="1">다음 달</button>
-  </div>
-  <div class="line_chart mx-auto mt-3 row justify-content-center charts" id="divForLineChart">
-    <div class="col-md-6 text-center">
-      <h2>waiting..</h2>
-    </div>
+
+<!--pyLDAvis-->
+
+<div class="container-fluid mt-5 text-center">
+  <h3 id="">토픽모델링 결과</h3>
+  <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForLastMonthLda" data-monthChange="-1">저번 달</button>
+  <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForNextMonthLda" data-monthChange="1">다음 달</button>
+  <div class="lda_chart mx-auto mt-3 row justify-content-center charts" id="divForPyLda">
+      <div class="col-md-6 text-center">
+          <h2>waiting..</h2>
+      </div>
   </div>
 </div>
 
-<!--테스트용 Line Graph-->
+
+
+<!--Line Graph-->
 <div class="text-center margin-top-many container-my">
-    <h3>-테스트-</h3>
+    <h3>일별 긍정, 부정 분석 결과</h3>
     <div class="mx-2 justify-content-space-around display-flex line-graph-box">
-        <div class="mt-4 text-center p-2">
-            <label class="line-graph-label">월</label>
-            <select class="selectorForm text-center" id="selectTestMonth">
-              <option value="1" selected="selected">&nbsp;1월&nbsp;</option>
-              <option value="2">&nbsp;2월&nbsp;</option>
-              <option value="3">&nbsp;3월&nbsp;</option>
-              <option value="4">&nbsp;4월&nbsp;</option>
-              <option value="5">&nbsp;5월&nbsp;</option>
-            </select>
-        </div>
-        <div class="mt-4 text-center p-2">
-            <label class="line-graph-label">버전</label>
-            <select class="selectorForm text-center" id="selectTestVersion">
-              <option value="1" selected="selected">&nbsp;1&nbsp;</option>
-              <option value="2">&nbsp;2&nbsp;</option>
-              <option value="3">&nbsp;3&nbsp;</option>
-              <option value="4">&nbsp;4&nbsp;</option>
-            </select>
-        </div>
+        <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForLastMonthLine" data-monthChange="-1">저번 달</button>
+        <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForNextMonthLine" data-monthChange="1">다음 달</button>
         <div class="mt-4 text-center p-2">
             <label class="line-graph-label">구간</label>
             <select class="selectorForm text-center" id="selectInterval">
@@ -121,6 +106,20 @@
       </div>
     </div>
 </div>
+
+<!--WordCloud-->
+
+<div class="container-fluid mt-5 text-center">
+  <h3 id="">워드클라우드 결과</h3>
+  <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForLastMonthWordCloud" data-monthChange="-1">저번 달</button>
+  <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForNextMonthWordCloud" data-monthChange="1">다음 달</button>
+  <div class="word-cloud mx-auto mt-3 row justify-content-center charts" id="divForWordCloud">
+      <div class="col-md-6 text-center">
+          <h2>waiting..</h2>
+      </div>
+  </div>
+</div>
+
 
 <!--News Chart-->
 <div class="container-fluid text-center margin-top-many-2 margin-bottom-many2">
