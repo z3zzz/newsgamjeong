@@ -4,9 +4,64 @@
 body {
    background-color: #edfaf7;
    font-family: 'Roboto', sans-serif;
-   color: rgba(0,0,0,0.9)
+   color: rgba(0,0,0,0.9);
+   height: 4400px;
 }
 
+@media only screen and (min-width: 963px) and  (max-width: 990px) {
+    body {
+       background-color: #edfaf7;
+       font-family: 'Roboto', sans-serif;
+       color: rgba(0,0,0,0.9);
+       height: 4800px;
+    }
+}
+
+
+@media only screen and (min-width: 845px) and (max-width: 963px) {
+    body {
+       background-color: #edfaf7;
+       font-family: 'Roboto', sans-serif;
+       color: rgba(0,0,0,0.9);
+       height: 5100px;
+    }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 845px) {
+    body {
+       background-color: #edfaf7;
+       font-family: 'Roboto', sans-serif;
+       color: rgba(0,0,0,0.9);
+       height: 5250px;
+    }
+}
+
+@media only screen and (min-width: 500px) and (max-width: 700px) {
+    body {
+       background-color: #edfaf7;
+       font-family: 'Roboto', sans-serif;
+       color: rgba(0,0,0,0.9);
+       height: 5300px;
+    }
+}
+
+@media only screen and (min-width: 450px) and (max-width: 500px) {
+    body {
+       background-color: #edfaf7;
+       font-family: 'Roboto', sans-serif;
+       color: rgba(0,0,0,0.9);
+       height: 5600px;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    body {
+       background-color: #edfaf7;
+       font-family: 'Roboto', sans-serif;
+       color: rgba(0,0,0,0.9);
+       height: 6100px;
+    }
+}
 path {
    fill: #edfaf7 !important;
 }
@@ -141,8 +196,32 @@ a {
     margin-bottom: 20vh;
 }
 
+.narrow-bottom-less {
+    margin-bottom: 30vh;
+}
+
+@media only screen and (max-width: 900px) {
+    .narrow-bottom-less {
+        margin-bottom: 15vh;
+    }
+}
+
+#divForPyLda-top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#divForPyLda-lambdaInput {
+    margin-right: 0;
+}
+
 .margin-bottom-many-4 {
     margin-bottom: 10vh
+}
+
+.margin-bottom-many-5 {
+    margin-bottom: 5vh
 }
 
 .anychart-credits {
@@ -158,6 +237,26 @@ a {
 .margin-bottom-many2 {
     margin-bottom: 60vh;
 }
+
+.margin-top-many3 {
+    margin-top: 3vh;
+}
+
+.div-for-space {
+    height: 10vh;
+}
+
+.permanent-space {
+    height: 50vh;
+}
+
+
+@media only screen and (max-width: 910px) {
+    .div-for-space {
+        height: 0;
+    }
+}
+
 
 .news_chart {
     max-width: 1100px; 

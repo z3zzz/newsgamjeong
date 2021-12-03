@@ -233,7 +233,8 @@ if (tdsForSuggestStatus) {
 
 window.addEventListener('scroll', function () {
     let footer = document.querySelector('footer')
-    if ((window.innerHeight + window.scrollY) > document.body.offsetHeight) {
+    //console.log(window.innerHeight, window.scrollY, document.body.offsetHeight)
+    if ((window.innerHeight + window.scrollY + 10) > document.body.offsetHeight) {
         footer.classList.remove('d-none')
         footer.classList.add('d-block')
     }

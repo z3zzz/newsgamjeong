@@ -60,7 +60,7 @@
 
 
 <!--Pie Graph--> <!--Ranking Chart-->
-<div class="container-fluid mt-5 text-center margin-bottom-many">
+<div class="container-fluid mt-5 text-center narrow-bottom-less">
   <h3 id="rankingOrPieChartText">긍정-부정 분석 결과</h3>
   <h5 id="subtitleForRankingChart"></h5>
   <div class="pie_chart mx-auto mt-3 row justify-content-center charts" id="divForPieChart">
@@ -73,7 +73,7 @@
 
 <!--pyLDAvis-->
 
-<div class="container-fluid mt-5 text-center margin-bottom-many-4">
+<div class="container-fluid mt-5 text-center ">
   <h3 id="">기사본문 토픽모델링 결과</h3>
   <div class="mx-2 display-flex justify-content-center">
     <div class="mt-4 mx-1 text-center">
@@ -122,9 +122,13 @@
     </div>
 </div>
 
+<div class="div-for-space">
+    
+</div>
+
 <!--WordCloud-->
 
-<div class="container-fluid mt-5 text-center margin-bottom-many-4">
+<div class="container-fluid text-center">
   <h3 id="">기사본문 워드클라우드 결과</h3>
   <div class="mx-2 display-flex justify-content-center">
     <div class="mt-4 mx-1 text-center">
@@ -171,7 +175,7 @@
 
 
 <!--News Chart-->
-<div class="container-fluid text-center margin-top-many-2 margin-bottom-many2">
+<div class="container-fluid text-center margin-bottom-many">
   <h3>뉴스별 긍정, 부정 분석 결과</h3>
   <div>
       <button type="button" class="btn btn-secondary btn-sm mx-2" id="buttonForLastPage" data-pagechange="-1">이전 </button>
@@ -193,6 +197,10 @@
       </tbody>
     </table>
   </div>
+</div>
+
+<div class="permanent-space">
+    
 </div>
 
 {% endblock %}

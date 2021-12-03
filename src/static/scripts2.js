@@ -763,6 +763,14 @@ const drawLineChart4 = async dataArray => {
                     display: false,
                 },
             },
+            elements: {
+                point: {
+                    radius: 0,
+                },
+                line: {
+                    borderWidth: 2,
+                },
+            },
         },
         stacked: false,
     })
