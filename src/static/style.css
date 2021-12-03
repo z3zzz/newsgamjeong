@@ -23,7 +23,7 @@ body {
        background-color: #edfaf7;
        font-family: 'Roboto', sans-serif;
        color: rgba(0,0,0,0.9);
-       height: 5100px;
+       height: 5150px;
     }
 }
 
@@ -209,11 +209,13 @@ a {
 #divForPyLda-top {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
 }
 
 #divForPyLda-lambdaInput {
-    margin-right: 0;
+    margin: 1em 0 !important;
+    padding: 0 !important;
+    margin:  0 !important
 }
 
 .margin-bottom-many-4 {

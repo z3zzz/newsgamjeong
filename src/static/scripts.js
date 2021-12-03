@@ -250,3 +250,8 @@ window.addEventListener('scroll', function () {
 
 
 });
+
+document.querySelector('#navSourceCode')?.addEventListener("click", () => {
+    alert("현재 서비스 준비중입니다 :)")
+    return
+})
