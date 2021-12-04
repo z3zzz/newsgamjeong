@@ -20,7 +20,7 @@ const getSelectors = async () => {
     let res = await fetch('/api/selectors')
     selectors = await res.json()
 
-    selectors.dates.sort().forEach(selector => {
+    selectors.dates.sort().reverse().forEach(selector => {
         let option = document.createElement('option')
         option.innerText = selector
         elemForSelectingDate?.append(option)

@@ -227,6 +227,33 @@ a {
     margin:  0 !important
 }
 
+@media only screen and (max-width: 1200px) {
+    #divForPyLda-lambdaInput {
+        margin-top: 1em !important;
+    }
+}
+
+@media only screen and (max-width: 555px) {
+    #divForPyLda-topic-clear {
+        display: none;
+    }
+}
+
+
+svg {
+    padding-left: 40vh !important;
+}
+
+svg.anychart-ui-support {
+    padding: 0 !important;
+}
+
+@media only screen and (max-width: 1850px) {
+    svg {
+        padding: 0 .2em !important;
+    }
+}
+
 .margin-bottom-many-4 {
     margin-bottom: 10vh
 }
