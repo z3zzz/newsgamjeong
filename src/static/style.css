@@ -5,15 +5,15 @@ body {
    background-color: #edfaf7;
    font-family: 'Roboto', sans-serif;
    color: rgba(0,0,0,0.9);
-   height: 4400px;
+   height: 4850px;
 }
 
-@media only screen and (min-width: 963px) and  (max-width: 990px) {
+@media only screen and (min-width: 963px) and  (max-width: 1014px) {
     body {
        background-color: #edfaf7;
        font-family: 'Roboto', sans-serif;
        color: rgba(0,0,0,0.9);
-       height: 4800px;
+       height: 5100px;
     }
 }
 
@@ -23,43 +23,52 @@ body {
        background-color: #edfaf7;
        font-family: 'Roboto', sans-serif;
        color: rgba(0,0,0,0.9);
-       height: 5150px;
-    }
-}
-
-@media only screen and (min-width: 700px) and (max-width: 845px) {
-    body {
-       background-color: #edfaf7;
-       font-family: 'Roboto', sans-serif;
-       color: rgba(0,0,0,0.9);
-       height: 5250px;
-    }
-}
-
-@media only screen and (min-width: 500px) and (max-width: 700px) {
-    body {
-       background-color: #edfaf7;
-       font-family: 'Roboto', sans-serif;
-       color: rgba(0,0,0,0.9);
        height: 5300px;
     }
 }
 
-@media only screen and (min-width: 450px) and (max-width: 500px) {
+@media only screen and (min-width: 680px) and (max-width: 845px) {
     body {
        background-color: #edfaf7;
        font-family: 'Roboto', sans-serif;
        color: rgba(0,0,0,0.9);
-       height: 5600px;
+       height: 5350px;
     }
 }
 
-@media only screen and (max-width: 450px) {
+@media only screen and (min-width: 550px) and (max-width: 680px) {
     body {
        background-color: #edfaf7;
        font-family: 'Roboto', sans-serif;
        color: rgba(0,0,0,0.9);
-       height: 6100px;
+       height: 5350px;
+    }
+}
+
+@media only screen and (min-width: 495px) and (max-width: 550px) {
+    body {
+       background-color: #edfaf7;
+       font-family: 'Roboto', sans-serif;
+       color: rgba(0,0,0,0.9);
+       height: 5400px;
+    }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 495px) {
+    body {
+       background-color: #edfaf7;
+       font-family: 'Roboto', sans-serif;
+       color: rgba(0,0,0,0.9);
+       height: 5700px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    body {
+       background-color: #edfaf7;
+       font-family: 'Roboto', sans-serif;
+       color: rgba(0,0,0,0.9);
+       height: 6300px;
     }
 }
 path {
@@ -249,7 +258,7 @@ a {
 }
 
 .permanent-space {
-    height: 50vh;
+    height: 10vh;
 }
 
 

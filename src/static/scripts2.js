@@ -522,7 +522,7 @@ let company_all
 let previous_keyword
 let previous_date
 
-const getNewData = async () => {
+const getNewData = async (e) => {
     let date = elemForSelectingDate?.value
     let keyword = elemForSelectingKeyword?.value
     company = elemForSelectingCompany?.value
@@ -565,35 +565,77 @@ const getNewData = async () => {
     await changeNewsChartContent(reqData)
     document.querySelector('#footer').innerHTML = await makeFooterDiv()
 
-    if (keyword !== "total" && keyword !== previous_keyword) await updateCompanySelectors(date, keyword)
+    let selectType = e?.target.dataset.selecttype
+    let isDateTotal = (date === "total")
+    let isKeywordTotal = (keyword === "total")
+    let isCompanyTotal = (company === "total")
 
-    if (keyword === "total" && keyword !== previous_keyword) await updateCompanySelectors(date, keyword)
+    if (selectType === "date" && !isDateTotal) {
+        if (!isCompanyTotal) await updateKeywordSelectors(date, keyword, company)
+        if (!isKeywordTotal) await updateCompanySelectors(date, keyword, company)
+    }
+
+    if (selectType === "date" && isDateTotal) {
+        if (!isCompanyTotal) await updateKeywordSelectors(date, keyword, company)
+        if (!isKeywordTotal) await updateCompanySelectors(date, keyword, company)
+    }
+
+    if (selectType === "keyword" && !isKeywordTotal && !isDateTotal) await updateCompanySelectors(date,keyword,company)
+    if (selectType === "company" && !isCompanyTotal && !isDateTotal) await updateKeywordSelectors(date,keyword,company)
 
     previous_date = date
     previous_keyword = keyword
 
 }
 
-const updateCompanySelectors = async (date, keyword) => {
-    let companies = await getJsonFromApi('update_selectors?', {date, keyword})
+const updateCompanySelectors = async (currentDate, currentKeyword, currentCompany) => {
+    let companies = await getJsonFromApi('update_company_selectors?', {date: currentDate, keyword: currentKeyword})
     elemForSelectingCompany.innerHTML = ""
 
-    let first_option = document.createElement('option')
-    first_option.innerText = "전체"
-    first_option.value = "total"
-    elemForSelectingCompany.append(first_option)
+    if (currentCompany !== "total") {
+        elemForSelectingCompany.append(createOptionElement(currentCompany, currentCompany))
+        elemForSelectingCompany.append(createOptionElement("전체", "total"))
+    }
+    if (currentCompany === "total") elemForSelectingCompany.append(createOptionElement("전체", "total"))
 
     companies.sort().forEach(company => {
-        let option = document.createElement('option')
-        option.innerText = company
-        elemForSelectingCompany.append(option)
+        if (company === currentCompany) return
+        elemForSelectingCompany.append(createOptionElement(company, company))
     })
 
     if (elemForSelectingCompany.childElementCount === 1) {
         elemForSelectingCompany.firstElementChild.innerText = "언론사 없음 :("
     }
-
 }
+
+const updateKeywordSelectors = async (currentDate, currentKeyword, currentCompany) => {
+    let keywords = await getJsonFromApi('update_keyword_selectors?', {date: currentDate, company: currentCompany})
+    elemForSelectingKeyword.innerHTML = ""
+
+    if (currentKeyword !== "total") {
+        elemForSelectingKeyword.append(createOptionElement(currentKeyword, currentKeyword))
+        elemForSelectingKeyword.append(createOptionElement("전체", "total"))
+    }
+    if (currentKeyword === "total") elemForSelectingKeyword.append(createOptionElement("전체", "total"))
+
+    keywords.sort().forEach(keyword => {
+        if (keyword === currentKeyword) return
+        elemForSelectingKeyword.append(createOptionElement(keyword, keyword))
+    })
+
+    if (elemForSelectingKeyword.childElementCount === 1) {
+        elemForSelectingKeyword.firstElementChild.innerText = "키워드 없음 :("
+    }
+}
+
+const createOptionElement = (text, value) => {
+    let option = document.createElement('option')
+    option.innerText = text
+    option.value = value
+    console.log(option)
+    return option
+}
+
 
 
 const makeFooterDiv = async () => {

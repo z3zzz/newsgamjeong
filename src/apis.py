@@ -73,7 +73,7 @@ def news_list():
         query_arr.append({"text_company": selected_company })
 
 
-    limit = 10000
+    limit = 1000
     offset = 0
 
     if selected_date == "total" and selected_keyword == "total" and selected_company == "total":
@@ -100,8 +100,8 @@ def selectors():
     result["_id"] = 0
     return jsonify(result)
 
-@apis.route('/api/update_selectors', methods=["GET"])
-def update_selectors():
+@apis.route('/api/update_company_selectors', methods=["GET"])
+def update_company_selectors():
     selected_date = request.args.get("date")
     selected_keyword = request.args.get("keyword")
 
@@ -115,6 +115,20 @@ def update_selectors():
 
     return jsonify(result)
 
+@apis.route('/api/update_keyword_selectors', methods=["GET"])
+def update_keyword_selectors():
+    selected_date = request.args.get("date")
+    selected_company = request.args.get("company")
+
+    minimum_criteria = 1
+
+    result = []
+    for c in col_statistics.find({"date": selected_date, "keyword": {"$ne": "total"}, "company": selected_company}):
+        if c["total"] <  minimum_criteria:
+            continue
+        result.append(c["keyword"])
+
+    return jsonify(result)
 
 @apis.route('/api/line_graph', methods=["GET"])
 def line_graph():
