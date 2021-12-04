@@ -632,7 +632,7 @@ const createOptionElement = (text, value) => {
     let option = document.createElement('option')
     option.innerText = text
     option.value = value
-    console.log(option)
+ //   console.log(option)
     return option
 }
 
