@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request
 from models import SuggestList
 from apis import apis
+from flask_cors import CORS
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/api/*": {"origins": "https://www.newsgamjeong.tk"}})
 app.debug = True
 app.register_blueprint(apis)
 
