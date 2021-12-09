@@ -7,6 +7,7 @@ name = "pypi"
 Flask = "*"
 pymongo = "*"
 bcrypt = "*"
+flask-cors = "*"
 
 [dev-packages]
 
